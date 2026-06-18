@@ -853,12 +853,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
   body{padding:0;}
   .calc{border:none;}
   .calc-head{padding:26px 22px 22px;}
-  .calc-body{padding:26px 22px 8px;}
+  .calc-body{padding:26px 16px 8px;}
   .result{margin:8px 0 0;}
   .result-inner{padding:22px 22px 20px;}
   .method,.cta,.calc-foot{padding-left:22px;padding-right:22px;}
   .method{margin:0 22px;}
-  .fac-grid{grid-template-columns:repeat(2,1fr);}
+  .fac-grid{grid-template-columns:repeat(3,1fr);}
   .rate-row label{flex:0 0 100%;}
   .ledger,.fac-close{margin:0 22px;}
   .stream{display:grid;grid-template-columns:44px 1fr;gap:4px 12px;align-items:start;}
@@ -1143,6 +1143,8 @@ body{font-size:17px;}
 /* ── MX DUAL CURRENCY DISPLAY ── */
 .mx-peso-line{font-family:'Hanken Grotesk',sans-serif;font-size:14px;color:rgba(255,255,255,0.45);margin-top:4px;letter-spacing:0.02em;}
 /* ─────────────────────────────────────────────────────────────────────── */
+/* Keep 3 facility columns on phones; only collapse to 2 on very small screens. */
+@media(max-width:359px){.fac-grid{grid-template-columns:repeat(2,1fr);}}
 /* ─────────────────────────────────────────────────────────────────────── */
 </style>
 </head>

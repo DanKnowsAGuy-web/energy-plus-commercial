@@ -128,4 +128,23 @@ const calcSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html
     background: transparent;
     color-scheme: dark;
   }
+
+  /* On phones the framed/padded container starves the calculator of width,
+     forcing it into a cramped layout. Break the embed out to the full
+     viewport so it gets its natural reading width. body has overflow-x:clip,
+     so the negative margins can't introduce a horizontal scrollbar. */
+  @media (max-width: 640px) {
+    .est__embed {
+      margin-inline: calc(50% - 50vw);
+      max-width: 100vw;
+      padding: 0;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .est__frame {
+      border-radius: 0;
+    }
+  }
 </style>
