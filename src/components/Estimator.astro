@@ -1,0 +1,131 @@
+---
+// Savings calculator. The interactive engine is the standalone bilingual
+// "EP calculator" (public/calculator.html), re-skinned to this page's tokens
+// and embedded as a same-origin, auto-resizing iframe so the exact calculator
+// logic stays intact while the chrome reads as part of this page.
+const calcSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html`;
+---
+
+<section class="section est" id="calculator" aria-labelledby="est-title">
+  <div class="container">
+    <div class="est__head reveal">
+      <p class="est__eyebrow">
+        <span class="est__eyebrow-dot" aria-hidden="true"></span>
+        Interactive calculator · about 2 minutes
+      </p>
+      <h2 class="est__title reveal" id="est-title" data-words>Now run your own number.</h2>
+      <p class="est__lede lede">
+        Your spend, your region, your facility type. This is a conservative
+        model, not a quote. During the pilot we measure the real figure at your
+        own meter, and the diagnosis is on us.
+      </p>
+    </div>
+
+    <div class="est__embed reveal" style="--i: 1">
+      <iframe
+        id="ep-calc-frame"
+        class="est__frame"
+        src={calcSrc}
+        title="Energy Plus savings calculator"
+        loading="lazy"
+        scrolling="no"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const f = document.getElementById("ep-calc-frame");
+    if (!f) return;
+
+    const fit = () => {
+      try {
+        const d = f.contentDocument;
+        if (!d || !d.body) return;
+        const h = Math.max(d.body.scrollHeight, d.documentElement.scrollHeight);
+        if (h) f.style.height = h + "px";
+      } catch (e) {
+        /* cross-origin or not ready; ignore */
+      }
+    };
+
+    f.addEventListener("load", () => {
+      fit();
+      try {
+        const d = f.contentDocument;
+        if (d && "ResizeObserver" in window) {
+          new ResizeObserver(fit).observe(d.body);
+        }
+        // the calculator reveals steps on interaction; re-measure after clicks
+        if (d) d.addEventListener("click", () => setTimeout(fit, 140), true);
+      } catch (e) {
+        /* ignore */
+      }
+      // safety net for transitions/font-load reflow shortly after mount
+      let n = 0;
+      const iv = setInterval(() => {
+        fit();
+        if (++n > 40) clearInterval(iv);
+      }, 250);
+    });
+
+    window.addEventListener("resize", fit);
+  })();
+</script>
+
+<style>
+  .est {
+    border-top: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 0%, color-mix(in srgb, var(--gold) 7%, transparent), transparent 70%),
+      var(--bg);
+  }
+  .est__head { max-width: 54rem; }
+  .est__title { font-size: var(--step-3); max-width: 18ch; }
+  .est__lede { margin-top: var(--space-m); }
+
+  /* signal that this block is a tool, not prose */
+  .est__eyebrow {
+    display: inline-flex; align-items: center; gap: 0.55em;
+    margin-bottom: var(--space-s);
+    font-family: var(--font-mono); font-size: var(--step--1);
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-text);
+  }
+  .est__eyebrow-dot {
+    width: 0.5em; height: 0.5em; border-radius: 50%;
+    background: var(--gold-text);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold-text) 70%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .est__eyebrow-dot { animation: estPulse 2.2s ease-out infinite; }
+    @keyframes estPulse {
+      0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold-text) 55%, transparent); }
+      70%, 100% { box-shadow: 0 0 0 8px transparent; }
+    }
+  }
+
+  /* the framed panel that hosts the embedded calculator */
+  .est__embed {
+    position: relative;
+    margin-top: var(--space-l);
+    margin-inline: auto;
+    max-width: 50rem;
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    border: 1px solid color-mix(in srgb, var(--gold-text) 28%, transparent);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--gold-text) 6%, transparent), transparent 60%),
+      var(--surface);
+    box-shadow: 0 24px 60px -40px color-mix(in srgb, var(--gold-text) 50%, transparent);
+  }
+  .est__frame {
+    display: block;
+    width: 100%;
+    height: 720px; /* initial; the resize script fits to content on load */
+    border: 0;
+    border-radius: var(--radius-s);
+    background: transparent;
+    color-scheme: dark;
+  }
+</style>
