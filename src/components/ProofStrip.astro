@@ -1,8 +1,9 @@
 ---
-// Compact "trusted by results" band: three named, field-measured case results
-// directly under the hero. The names carry the credibility (a hospital, a known
-// category), so this reads as proof, not a vanity stat bar. Same three results
-// the calculator opens with. Links down to the full verified record.
+// "Trusted by results" band, set on a light surface for contrast against the
+// dark sections around it. Six named, field-measured results from the verified
+// record, shown three at a time in a slow auto-advancing conveyor (one step
+// every few seconds, pauses on hover, static under reduced motion). Compact:
+// the figure sits beside its field type, not stacked, to keep the band short.
 interface Props {
   lang?: "en" | "es";
 }
@@ -13,96 +14,106 @@ const t = {
     lead: "Measured in the field by independent analysts, not modeled.",
     more: "200+ verified results",
     items: [
-      { fig: "$180K", suf: "/yr", name: "Edward Hospital", meta: "Illinois · whole facility" },
-      { fig: "49%", suf: "", name: "Arizona Ford Dealership", meta: "full-stack program" },
-      { fig: "33%", suf: "", name: "Midwest Bottling Facility", meta: "manufacturing" },
+      { fig: "49.2%", type: "Auto dealership", name: "AZ Ford Dealership, Arizona" },
+      { fig: "24%", type: "Hospital", name: "Edward Hospital, Illinois" },
+      { fig: "19.2%", type: "Beverage bottler", name: "Anheuser-Busch, Mississippi" },
+      { fig: "21.1%", type: "Shopping mall", name: "Simon Property, Jersey Gardens" },
+      { fig: "15%", type: "Cold storage", name: "DHL Refrigeration Plant" },
+      { fig: "27%", type: "Municipal", name: "City of Rainsville, Alabama" },
     ],
   },
   es: {
     lead: "Medido en campo por analistas independientes, no modelado.",
     more: "Más de 200 resultados verificados",
     items: [
-      { fig: "$180K", suf: "/año", name: "Edward Hospital", meta: "Illinois · instalación completa" },
-      { fig: "49%", suf: "", name: "Concesionario Ford en Arizona", meta: "programa integral" },
-      { fig: "33%", suf: "", name: "Planta embotelladora del Medio Oeste", meta: "manufactura" },
+      { fig: "49.2%", type: "Concesionario de autos", name: "AZ Ford Dealership, Arizona" },
+      { fig: "24%", type: "Hospital", name: "Edward Hospital, Illinois" },
+      { fig: "19.2%", type: "Embotelladora", name: "Anheuser-Busch, Mississippi" },
+      { fig: "21.1%", type: "Centro comercial", name: "Simon Property, Jersey Gardens" },
+      { fig: "15%", type: "Almacén refrigerado", name: "DHL Refrigeration Plant" },
+      { fig: "27%", type: "Municipal", name: "Ciudad de Rainsville, Alabama" },
     ],
   },
 }[lang];
 ---
 
 <section class="tps" aria-label="Verified results">
-  <div class="container tps__inner">
-    <p class="tps__lead">{t.lead}</p>
-    <ul class="tps__grid">
-      {t.items.map((it) => (
-        <li class="tps__item">
-          <span class="tps__fig">{it.fig}<span class="tps__suf">{it.suf}</span></span>
-          <span class="tps__name">{it.name}</span>
-          <span class="tps__meta">{it.meta}</span>
-        </li>
-      ))}
-    </ul>
-    <a class="tps__more" href="#proof">
-      {t.more}
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-    </a>
+  <div class="container">
+    <div class="tps__head">
+      <p class="tps__lead">{t.lead}</p>
+      <a class="tps__more" href="#proof">
+        {t.more}
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+    </div>
+
+    <div class="tps__viewport">
+      <ul class="tps__track" id="tps-track">
+        {t.items.map((it) => (
+          <li class="tps__item">
+            <span class="tps__fig">{it.fig}</span>
+            <span class="tps__txt">
+              <span class="tps__type">{it.type}</span>
+              <span class="tps__name">{it.name}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const track = document.getElementById("tps-track");
+    if (!track) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let animating = false;
+    const advance = () => {
+      if (animating || document.hidden) return;
+      const first = track.firstElementChild;
+      if (!first) return;
+      animating = true;
+      const gap = parseFloat(getComputedStyle(track).columnGap || "0") || 0;
+      const dist = first.getBoundingClientRect().width + gap;
+      track.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
+      track.style.transform = "translateX(-" + dist + "px)";
+      const done = () => {
+        track.removeEventListener("transitionend", done);
+        track.style.transition = "none";
+        track.appendChild(first);
+        track.style.transform = "translateX(0)";
+        // force reflow so the next transition starts cleanly
+        void track.offsetWidth;
+        animating = false;
+      };
+      track.addEventListener("transitionend", done);
+    };
+    let timer = setInterval(advance, 3800);
+    const stop = () => { clearInterval(timer); };
+    const start = () => { stop(); timer = setInterval(advance, 3800); };
+    track.addEventListener("mouseenter", stop);
+    track.addEventListener("mouseleave", start);
+  })();
+</script>
 
 <style>
   .tps {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
-    background: color-mix(in srgb, var(--surface) 55%, transparent);
     padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .tps__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-m);
+    flex-wrap: wrap;
+    margin-bottom: clamp(1rem, 2.5vw, 1.4rem);
   }
   .tps__lead {
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    margin-bottom: clamp(1rem, 3vw, 1.5rem);
-  }
-  .tps__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.25rem, 4vw, 3rem);
-  }
-  .tps__item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding-left: clamp(1rem, 2.5vw, 1.75rem);
-    border-left: 1px solid var(--line-strong);
-  }
-  .tps__item:first-child { padding-left: 0; border-left: none; }
-  .tps__fig {
-    font-family: var(--font-serif);
-    font-size: clamp(2.1rem, 4.5vw, 3.1rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--gold-text);
-  }
-  .tps__suf {
-    font-size: 0.42em;
-    font-family: var(--font-mono);
-    color: var(--muted);
-    letter-spacing: 0.02em;
-    margin-left: 0.15em;
-  }
-  .tps__name {
-    margin-top: 0.45rem;
-    font-size: var(--step-0);
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.25;
-  }
-  .tps__meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
     letter-spacing: 0.03em;
     color: var(--muted);
   }
@@ -110,7 +121,6 @@ const t = {
     display: inline-flex;
     align-items: center;
     gap: 0.45em;
-    margin-top: clamp(1.25rem, 3vw, 1.75rem);
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: 0.03em;
@@ -121,20 +131,60 @@ const t = {
   .tps__more svg { width: 1.05em; height: 1.05em; }
   .tps__more:hover { gap: 0.8em; }
 
-  @media (max-width: 640px) {
-    .tps__grid { grid-template-columns: 1fr; gap: 1.1rem; }
-    .tps__item {
-      padding-left: 0;
-      border-left: none;
-      border-top: 1px solid var(--line);
-      padding-top: 1.1rem;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.2rem 0.8rem;
-    }
-    .tps__item:first-child { border-top: none; padding-top: 0; }
-    .tps__name { margin-top: 0; }
-    .tps__meta { flex-basis: 100%; }
+  .tps__viewport { overflow: hidden; }
+  .tps__track {
+    --gap: clamp(1.25rem, 3vw, 2.25rem);
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    will-change: transform;
+  }
+  .tps__item {
+    flex: 0 0 calc((100% - 2 * var(--gap)) / 3);
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    min-width: 0;
+  }
+  .tps__fig {
+    flex: none;
+    font-family: var(--font-serif);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--gold-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .tps__txt { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+  .tps__type {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .tps__name {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 900px) {
+    .tps__item { flex-basis: calc((100% - 1 * var(--gap)) / 2); }
+  }
+  @media (max-width: 560px) {
+    .tps__item { flex-basis: 82%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* no conveyor: show all six in a static wrapped grid */
+    .tps__viewport { overflow: visible; }
+    .tps__track { flex-wrap: wrap; row-gap: clamp(1rem, 3vw, 1.5rem); }
+    .tps__item { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
   }
 </style>
