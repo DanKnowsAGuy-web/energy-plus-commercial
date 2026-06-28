@@ -6,7 +6,7 @@
 import Base from "../layouts/Base.astro";
 import Header from "./Header.astro";
 import Hero from "./HeroInstrument.astro";
-import FloorStat from "./FloorStat.astro";
+import ProofStrip from "./ProofStrip.astro";
 import Capsule from "./Capsule.astro";
 import Estimator from "./Estimator.astro";
 import ProblemLean from "./ProblemLean.astro";
@@ -48,7 +48,7 @@ const m = meta[lang] ?? meta.en;
     <main id="main">
       {/* --- Fast path: the offer and the tool, before any technical reading --- */}
       <Hero lang={lang} />
-      <FloorStat />
+      <ProofStrip lang={lang} />
       <Capsule lang={lang} />
       <Estimator lang={lang} />
 
