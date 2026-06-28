@@ -1,0 +1,128 @@
+---
+// "The offer in one fold." Distills the program + guarantee into three lines a
+// time-poor operator can grasp without reading any technical sections, with the
+// single CTA right here. Used at the top of the resequenced (fast-path) layout.
+import CtaPair from "./CtaPair.astro";
+import Disc from "./Disc.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    title: "The whole offer, in plain terms.",
+    p1s: "We find the waste and prove it at your meter.",
+    p1: "Not a projection and not a vendor's claim. Your own reading.",
+    p2s: "The diagnosis is on us.",
+    p2: "It costs you nothing to find out what you are overpaying.",
+    p3s: "Verify first, commit after.",
+    p3: "Nothing is installed and nothing is owed until we prove your savings floor.",
+  },
+  es: {
+    title: "Toda la oferta, en términos claros.",
+    p1s: "Encontramos el desperdicio y lo comprobamos en su medidor.",
+    p1: "No es una proyección ni la afirmación de un proveedor. Es su propia lectura.",
+    p2s: "El diagnóstico corre por nuestra cuenta.",
+    p2: "No le cuesta nada averiguar cuánto está pagando de más.",
+    p3s: "Primero verificamos, después se compromete.",
+    p3: "No se instala nada, y no se debe nada, hasta que comprobemos su piso de ahorro.",
+  },
+}[lang];
+---
+
+<section class="section cap" id="offer-capsule" aria-labelledby="cap-title">
+  <div class="container cap__inner">
+    <h2 class="cap__title" id="cap-title">{t.title}</h2>
+
+    <ul class="cap__points">
+      <li class="cap__point">
+        <span class="cap__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+          </svg>
+        </span>
+        <p><strong>{t.p1s}</strong> {t.p1}</p>
+      </li>
+      <li class="cap__point cap__point--trust">
+        <span class="cap__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 5v6c0 5 3.4 8.3 8 11 4.6-2.7 8-6 8-11V5Z" /><path d="m9 12 2 2 4-4" />
+          </svg>
+        </span>
+        <p><strong>{t.p2s}</strong> {t.p2}<Disc to="terms" lang={lang} /></p>
+      </li>
+      <li class="cap__point cap__point--trust">
+        <span class="cap__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        </span>
+        <p><strong>{t.p3s}</strong> {t.p3}<Disc to="terms" lang={lang} /></p>
+      </li>
+    </ul>
+
+    <div class="cap__cta">
+      <CtaPair size="lg" lang={lang} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cap {
+    border-top: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 55% 50% at 50% 0%, color-mix(in srgb, var(--gold) 7%, transparent), transparent 70%),
+      var(--bg);
+  }
+  .cap__inner { max-width: 56rem; }
+  .cap__title {
+    font-size: var(--step-3);
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .cap__points {
+    list-style: none;
+    margin: var(--space-l) 0 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.6rem);
+  }
+  .cap__point {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding-bottom: clamp(1rem, 3vw, 1.6rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .cap__point:last-child { border-bottom: none; padding-bottom: 0; }
+  .cap__ico {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: var(--gold-text);
+    background: var(--gold-soft);
+    border: 1px solid color-mix(in srgb, var(--gold-text) 30%, transparent);
+  }
+  .cap__point--trust .cap__ico {
+    color: var(--mint);
+    background: var(--mint-soft);
+    border-color: color-mix(in srgb, var(--mint) 38%, transparent);
+  }
+  .cap__ico svg { width: 1.3rem; height: 1.3rem; }
+  .cap__point p {
+    font-size: var(--step-0);
+    line-height: 1.55;
+    color: var(--body);
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+  .cap__point strong { color: var(--ink); font-weight: 600; }
+  .cap__point--trust strong { color: var(--mint); }
+
+  .cap__cta { margin-top: var(--space-l); }
+</style>
