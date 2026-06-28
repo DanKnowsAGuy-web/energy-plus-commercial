@@ -3,7 +3,27 @@
 // "EP calculator" (public/calculator.html), re-skinned to this page's tokens
 // and embedded as a same-origin, auto-resizing iframe so the exact calculator
 // logic stays intact while the chrome reads as part of this page.
-const calcSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html`;
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+const calcSrc =
+  `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html` +
+  (lang === "es" ? "?lang=es" : "");
+const t = {
+  en: {
+    eyebrow: "Interactive calculator · about 2 minutes",
+    title: "Now run your own number.",
+    lede: "Your spend, your region, your facility type. This is a conservative model, not a quote. During the pilot we measure the real figure at your own meter, and the diagnosis is on us.",
+    frame: "Energy Plus savings calculator",
+  },
+  es: {
+    eyebrow: "Calculadora interactiva · unos 2 minutos",
+    title: "Ahora calcule su propio número.",
+    lede: "Su gasto, su región, su tipo de instalación. Este es un modelo conservador, no una cotización. Durante el piloto medimos la cifra real en su propio medidor, y el diagnóstico corre por nuestra cuenta.",
+    frame: "Calculadora de ahorro de Energy Plus",
+  },
+}[lang];
 ---
 
 <section class="section est" id="calculator" aria-labelledby="est-title">
@@ -11,14 +31,10 @@ const calcSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html
     <div class="est__head reveal">
       <p class="est__eyebrow">
         <span class="est__eyebrow-dot" aria-hidden="true"></span>
-        Interactive calculator · about 2 minutes
+        {t.eyebrow}
       </p>
-      <h2 class="est__title reveal" id="est-title" data-words>Now run your own number.</h2>
-      <p class="est__lede lede">
-        Your spend, your region, your facility type. This is a conservative
-        model, not a quote. During the pilot we measure the real figure at your
-        own meter, and the diagnosis is on us.
-      </p>
+      <h2 class="est__title reveal" id="est-title" data-words>{t.title}</h2>
+      <p class="est__lede lede">{t.lede}</p>
     </div>
 
     <div class="est__embed reveal" style="--i: 1">
@@ -26,7 +42,7 @@ const calcSrc = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}calculator.html
         id="ep-calc-frame"
         class="est__frame"
         src={calcSrc}
-        title="Energy Plus savings calculator"
+        title={t.frame}
         loading="lazy"
         scrolling="no"
       ></iframe>

@@ -6,28 +6,70 @@
 // claim carries a <Disc> marker tying it to the footer disclaimers.
 import CtaPair from "./CtaPair.astro";
 import Disc from "./Disc.astro";
-const items = [
-  { name: "Meter & equipment-verified diagnosis", desc: "proven for your devices", val: "on us", ref: "terms" },
-  { name: "HVAC efficiency", val: "15–50% of HVAC cost", ref: "results" },
-  { name: "Refrigeration efficiency", val: "15–30% of refrigeration cost", ref: "results" },
-  { name: "Energy harmonization", val: "8–14% of your electric bill", ref: "results" },
-  { name: "Peak demand charge elimination", desc: "what it takes to zero out your demand charges", val: "a plan to zero them out", ref: "results" },
-  { name: "Utility program coverage", val: "up to 50–75% of project cost", ref: "utility" },
-  { name: "Section 179D tax deduction", val: "up to $5.94 / sq ft, one-time", ref: "tax" },
-] as const;
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    title: "What you actually get.",
+    stackName: "The Verified Savings Pilot",
+    stackSub:
+      "One program. Everything below is included, and your number is measured at your meter before you commit a dollar.",
+    items: [
+      { name: "Meter & equipment-verified diagnosis", desc: "proven for your devices", val: "on us", ref: "terms" },
+      { name: "HVAC efficiency", val: "15–50% of HVAC cost", ref: "results" },
+      { name: "Refrigeration efficiency", val: "15–30% of refrigeration cost", ref: "results" },
+      { name: "Energy harmonization", val: "8–14% of your electric bill", ref: "results" },
+      { name: "Peak demand charge elimination", desc: "what it takes to zero out your demand charges", val: "a plan to zero them out", ref: "results" },
+      { name: "Utility program coverage", val: "up to 50–75% of project cost", ref: "utility" },
+      { name: "Section 179D tax deduction", val: "up to $5.94 / sq ft, one-time", ref: "tax" },
+    ],
+    floorLabel: "Your savings floor",
+    floorVal: "measured at your meter, not estimated",
+    floorCostLabel: "Your cost to find out",
+    floorCost: "$0",
+    guaranteeH: "The Floor Guarantee",
+    guaranteeP:
+      "If we don't prove your savings floor at your own meter, nothing is installed and you owe nothing. Verify first, commit after.",
+  },
+  es: {
+    title: "Lo que realmente recibe.",
+    stackName: "El Piloto de Ahorro Verificado",
+    stackSub:
+      "Un solo programa. Todo lo de abajo está incluido, y su cifra se mide en su medidor antes de que comprometa un solo dólar.",
+    items: [
+      { name: "Diagnóstico verificado en medidor y equipos", desc: "comprobado para sus equipos", val: "por nuestra cuenta", ref: "terms" },
+      { name: "Eficiencia de HVAC", val: "15–50% del costo de HVAC", ref: "results" },
+      { name: "Eficiencia de refrigeración", val: "15–30% del costo de refrigeración", ref: "results" },
+      { name: "Armonización de energía", val: "8–14% de su factura eléctrica", ref: "results" },
+      { name: "Eliminación del cargo por demanda pico", desc: "lo necesario para llevar a cero sus cargos por demanda", val: "un plan para llevarlos a cero", ref: "results" },
+      { name: "Cobertura de programas de servicios públicos", val: "hasta 50–75% del costo del proyecto", ref: "utility" },
+      { name: "Deducción fiscal Sección 179D", val: "hasta $5.94 / pie cuadrado, única vez", ref: "tax" },
+    ],
+    floorLabel: "Su piso de ahorro",
+    floorVal: "medido en su medidor, no estimado",
+    floorCostLabel: "Su costo por averiguarlo",
+    floorCost: "$0",
+    guaranteeH: "La Garantía del Piso",
+    guaranteeP:
+      "Si no comprobamos su piso de ahorro en su propio medidor, no se instala nada y usted no paga nada. Primero verifique, después se compromete.",
+  },
+}[lang];
+
+const items = t.items;
 ---
 
 <section class="section offerl" id="offer" aria-labelledby="offerl-title">
   <div class="container">
     <div class="offerl__inner reveal">
-      <h2 class="offerl__title" id="offerl-title">What you actually get.</h2>
+      <h2 class="offerl__title" id="offerl-title">{t.title}</h2>
 
       <div class="offerl__stack instrument-frame">
-        <p class="offerl__stack-name">The Verified Savings Pilot</p>
-        <p class="offerl__stack-sub">
-          One program. Everything below is included, and your number is measured
-          at your meter before you commit a dollar.
-        </p>
+        <p class="offerl__stack-name">{t.stackName}</p>
+        <p class="offerl__stack-sub">{t.stackSub}</p>
 
         <ul class="offerl__items">
           {items.map((it) => (
@@ -46,12 +88,12 @@ const items = [
 
         <div class="offerl__floor">
           <div class="offerl__floor-row">
-            <span class="offerl__floor-label">Your savings floor</span>
-            <span class="offerl__floor-val">measured at your meter, not estimated</span>
+            <span class="offerl__floor-label">{t.floorLabel}</span>
+            <span class="offerl__floor-val">{t.floorVal}</span>
           </div>
           <div class="offerl__floor-row">
-            <span class="offerl__floor-label">Your cost to find out</span>
-            <span class="offerl__floor-cost">$0</span>
+            <span class="offerl__floor-label">{t.floorCostLabel}</span>
+            <span class="offerl__floor-cost">{t.floorCost}</span>
           </div>
         </div>
 
@@ -60,16 +102,13 @@ const items = [
             <span class="offerl__guarantee-ico" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5 4.5 5.5v5.2c0 4.6 3.2 8.4 7.5 9.8 4.3-1.4 7.5-5.2 7.5-9.8V5.5L12 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M8.5 12 11 14.5 16 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </span>
-            The Floor Guarantee
+            {t.guaranteeH}
           </p>
-          <p class="offerl__guarantee-p">
-            If we don't prove your savings floor at your own meter, nothing is
-            installed and you owe nothing. Verify first, commit after.
-          </p>
+          <p class="offerl__guarantee-p">{t.guaranteeP}</p>
         </div>
       </div>
 
-      <CtaPair />
+      <CtaPair lang={lang} />
     </div>
   </div>
 </section>

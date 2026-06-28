@@ -5,19 +5,30 @@
 // disclaimer so the page stays legally readable.
 interface Props {
   to: "results" | "terms" | "tax" | "utility";
+  lang?: "en" | "es";
 }
-const { to } = Astro.props;
+const { to, lang = "en" } = Astro.props;
 const num: Record<Props["to"], number> = {
   results: 1, terms: 2, tax: 3, utility: 4,
 };
-const label: Record<Props["to"], string> = {
-  results: "savings and performance figures",
-  terms: "program terms and eligibility",
-  tax: "tax incentives",
-  utility: "utility and incentive programs",
-};
+const labels = {
+  en: {
+    see: "See disclaimer",
+    results: "savings and performance figures",
+    terms: "program terms and eligibility",
+    tax: "tax incentives",
+    utility: "utility and incentive programs",
+  },
+  es: {
+    see: "Ver la nota legal",
+    results: "cifras de ahorro y desempeño",
+    terms: "términos y elegibilidad del programa",
+    tax: "incentivos fiscales",
+    utility: "programas de servicios públicos e incentivos",
+  },
+}[lang];
 ---
 
-<sup class="disc-ref"><a href={`#disc-${to}`} aria-label={`See disclaimer ${num[to]}, ${label[to]}`}>{num[to]}</a></sup>
+<sup class="disc-ref"><a href={`#disc-${to}`} aria-label={`${labels.see} ${num[to]}, ${labels[to]}`}>{num[to]}</a></sup>
 <!-- .disc-ref styled globally (src/styles/global.css) so JS-injected markers match -->
 

@@ -1,32 +1,51 @@
 ---
 import CtaPair from "./CtaPair.astro";
 import Disc from "./Disc.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    title: "Stop paying for power your building never uses.",
+    lede: "Fifteen minutes. We look at your portfolio, tell you whether a Verified Savings Pilot makes sense, and show you exactly how we'd diagnose and verify the floor at your building. No projection, no pressure.",
+    promiseStrong: "Verify first, commit after.",
+    promiseRest: "The diagnosis is on us. Nothing is installed, and nothing is owed, until we prove your savings floor at your own meter.",
+    aside: "We typically have a same-week slot.",
+  },
+  es: {
+    title: "Deje de pagar por energía que su edificio nunca usa.",
+    lede: "Quince minutos. Revisamos su portafolio, le decimos si un Piloto de Ahorro Verificado tiene sentido y le mostramos exactamente cómo diagnosticaríamos y verificaríamos el piso conservador en su edificio. Sin proyecciones, sin presión.",
+    promiseStrong: "Primero verificamos, después se compromete.",
+    promiseRest: "El diagnóstico corre por nuestra cuenta. No se instala nada, y no se debe nada, hasta que comprobemos su piso de ahorro en su propio medidor.",
+    aside: "Por lo general tenemos un espacio disponible esta misma semana.",
+  },
+}[lang];
 ---
 
 <section class="section final" id="book" aria-labelledby="final-title">
   <div class="container">
     <div class="final__inner reveal">
       <h2 class="final__title" id="final-title">
-        Stop paying for power your building never uses.
+        {t.title}
       </h2>
       <p class="final__lede">
-        Fifteen minutes. We look at your portfolio, tell you whether a Verified
-        Savings Pilot makes sense, and show you exactly how we'd diagnose and
-        verify the floor at your building. No projection, no pressure.
+        {t.lede}
       </p>
 
       <p class="final__promise">
         <span class="final__promise-dot" aria-hidden="true"></span>
         <span>
-          <strong>Verify first, commit after.</strong> The diagnosis is on us.
-          Nothing is installed, and nothing is owed, until we prove your savings
-          floor at your own meter.<Disc to="terms" />
+          <strong>{t.promiseStrong}</strong> {t.promiseRest}<Disc to="terms" lang={lang} />
         </span>
       </p>
 
       <div class="final__actions">
-        <CtaPair size="lg" />
-        <span class="final__aside">We typically have a same-week slot.<Disc to="terms" /></span>
+        <CtaPair size="lg" lang={lang} />
+        <span class="final__aside">{t.aside}<Disc to="terms" lang={lang} /></span>
       </div>
     </div>
   </div>

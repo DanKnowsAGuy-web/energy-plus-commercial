@@ -4786,5 +4786,14 @@ function closeVideo(){
     </div>
   </div>
 </div>
+<script>
+  /* When embedded from the Spanish page (?lang=es), start in Spanish. */
+  (function () {
+    try {
+      var p = new URLSearchParams(location.search).get("lang");
+      if (p === "es" && typeof setLang === "function") setLang("es");
+    } catch (e) {}
+  })();
+</script>
 </body>
 </html>

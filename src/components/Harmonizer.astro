@@ -7,6 +7,91 @@
 // pool/laundry drive drum sits just left of the elevator shaft. Sparks ride
 // the riser while dirty; clean blue sine waves feed every line once healed.
 import Disc from "./Disc.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    title: "What dirty power does, and what the harmonizer undoes.",
+    card1: "Modern equipment pulls power in fast pulses instead of a steady draw, and most of that instability starts inside your own building.",
+    navAria: "Step through the four stages",
+    prevAria: "Previous stage",
+    nextAria: "Next stage",
+    nextLabel: "See what happens",
+    nextAfter: "Next",
+    svgAria: "Distorted grid current flows toward a commercial building cross-section, running its HVAC drives, compressors, and elevator motor hot; a harmonizer drops in against the building like a shield, and everything behind it heals: clean blue current feeds every line and the windows warm as the building settles. The grid side stays distorted throughout.",
+    boxLabel: "Harmonizer",
+    boxSub: "at the panel",
+    billLabel: "Your utility bill",
+    rUseful: "Useful energy",
+    rHeat: "Lost as heat",
+    rPf: "Power-factor penalty",
+    rHarmo: "Harmonizer",
+    rPay: "What you pay",
+    billNote: "Illustrative split, set by your own utility data.",
+    offbillEyebrow: "Off the bill, too",
+    offbill: "Dirty power also takes <strong>5+ years</strong> off a large HVAC unit, the kind that costs <strong>tens of thousands</strong> to replace. That bill never reaches your meter.",
+    mTitle: "What dirty power does, and what the harmonizer undoes.",
+    mStep1: "Your motors, elevators, and air conditioners pull electricity in rough, uneven bursts. That roughness builds up inside your building, not out on the grid.",
+    mStep2: "Rough power gets less done, so your building pulls more electricity to run the same machines. The waste shows up on every bill.",
+    mStep3: "The harmonizer cleans up the power where it enters your building, before the roughness reaches your equipment. Your motors and compressors run cooler and steadier.",
+    mStep4: "Lower bills, fewer breakdowns, and equipment that lasts longer.",
+    vizDirtyAria: "A rough, distorted current waveform.",
+    vizCleanAria: "A clean, steady current waveform.",
+    capDirty: "Rough, uneven current",
+    capChip: "Harmonizer · at the panel",
+    mStat: "<strong>8 to 14%</strong> energy savings, verified at buildings like yours.",
+  },
+  es: {
+    title: "Lo que hace la energía sucia, y lo que el armonizador deshace.",
+    card1: "El equipo moderno consume energía en pulsos rápidos en lugar de una demanda constante, y la mayor parte de esa inestabilidad comienza dentro de su propio edificio.",
+    navAria: "Recorra las cuatro etapas",
+    prevAria: "Etapa anterior",
+    nextAria: "Siguiente etapa",
+    nextLabel: "Vea lo que pasa",
+    nextAfter: "Siguiente",
+    svgAria: "La corriente distorsionada de la red fluye hacia la sección transversal de un edificio comercial, manteniendo calientes sus variadores de HVAC, compresores y el motor del ascensor; un armonizador se coloca contra el edificio como un escudo, y todo lo que queda detrás sana: una corriente azul y limpia alimenta cada línea y las ventanas se iluminan a medida que el edificio se estabiliza. El lado de la red permanece distorsionado en todo momento.",
+    boxLabel: "Armonizador",
+    boxSub: "en el tablero",
+    billLabel: "Su factura de luz",
+    rUseful: "Energía útil",
+    rHeat: "Perdido como calor",
+    rPf: "Penalización por factor de potencia",
+    rHarmo: "Armonizador",
+    rPay: "Lo que usted paga",
+    billNote: "División ilustrativa, definida según los datos de su propia compañía de servicios.",
+    offbillEyebrow: "Fuera de la factura, también",
+    offbill: "La energía sucia también le quita <strong>más de 5 años</strong> de vida a una unidad grande de HVAC, de las que cuestan <strong>decenas de miles</strong> reemplazar. Esa factura nunca llega a su medidor.",
+    mTitle: "Lo que hace la energía sucia, y lo que el armonizador deshace.",
+    mStep1: "Sus motores, ascensores y aires acondicionados consumen electricidad en ráfagas bruscas y desiguales. Esa aspereza se acumula dentro de su edificio, no afuera en la red.",
+    mStep2: "La energía áspera rinde menos, así que su edificio consume más electricidad para mover las mismas máquinas. El desperdicio aparece en cada factura.",
+    mStep3: "El armonizador limpia la energía donde entra a su edificio, antes de que la aspereza llegue a su equipo. Sus motores y compresores funcionan más fríos y estables.",
+    mStep4: "Facturas más bajas, menos averías y equipos que duran más.",
+    vizDirtyAria: "Una forma de onda de corriente áspera y distorsionada.",
+    vizCleanAria: "Una forma de onda de corriente limpia y constante.",
+    capDirty: "Corriente áspera y desigual",
+    capChip: "Armonizador · en el tablero",
+    mStat: "<strong>8 a 14%</strong> de ahorro de energía, verificado en edificios como el suyo.",
+  },
+}[lang];
+
+const cards = {
+  en: [
+    "Your motors, elevators, and air conditioners pull electricity in rough, uneven bursts. That roughness builds up inside your building, not out on the grid.",
+    "Rough power gets less done, so your building pulls more electricity to run the same machines. Your meter counts the waste, and it shows up on every bill.",
+    "The harmonizer cleans up the power where it enters your building, before the roughness reaches your equipment. Your motors and compressors run cooler and steadier.",
+    "Lower bills, fewer breakdowns, and equipment that lasts longer. Verified at buildings like yours: 8 to 14 percent energy savings.",
+  ],
+  es: [
+    "Sus motores, ascensores y aires acondicionados consumen electricidad en ráfagas bruscas y desiguales. Esa aspereza se acumula dentro de su edificio, no afuera en la red.",
+    "La energía áspera rinde menos, así que su edificio consume más electricidad para mover las mismas máquinas. Su medidor cuenta el desperdicio, y aparece en cada factura.",
+    "El armonizador limpia la energía donde entra a su edificio, antes de que la aspereza llegue a su equipo. Sus motores y compresores funcionan más fríos y estables.",
+    "Facturas más bajas, menos averías y equipos que duran más. Verificado en edificios como el suyo: 8 a 14 por ciento de ahorro de energía.",
+  ],
+}[lang];
 const X0 = 80;
 const WAVE_END = 418; // reaches the building until the shield clips it back
 const DRAW_W = (WAVE_END - X0) * 2;
@@ -65,27 +150,26 @@ const mDirtyD = mWave(300, 60, true);
 const mCleanD = mWave(300, 60, false);
 ---
 
-<section class="hz" aria-labelledby="hz-title">
+<section class="hz" aria-labelledby="hz-title" data-cards={JSON.stringify(cards)} data-next-after={t.nextAfter}>
   <div class="hz__sticky">
     <div class="container hz__inner">
       <div class="hz__head">
         <h2 class="hz__title" id="hz-title">
-          What dirty power does, and what the harmonizer undoes.
+          {t.title}
         </h2>
         <div class="hz__cardrow">
           <div class="hz__card" id="hz-card" aria-live="polite">
             <span class="hz__card-num" id="hz-card-num">1 / 4</span>
             <p class="hz__card-text" id="hz-card-text">
-              Modern equipment pulls power in fast pulses instead of a steady
-              draw, and most of that instability starts inside your own building.
+              {t.card1}
             </p>
           </div>
-          <div class="hz__nav" role="group" aria-label="Step through the four stages">
-            <button type="button" class="hz__arrow hz__arrow--prev" id="hz-prev" aria-label="Previous stage" disabled>
+          <div class="hz__nav" role="group" aria-label={t.navAria}>
+            <button type="button" class="hz__arrow hz__arrow--prev" id="hz-prev" aria-label={t.prevAria} disabled>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </button>
-            <button type="button" class="hz__arrow hz__arrow--next is-cue" id="hz-next" aria-label="Next stage">
-              <span class="hz__arrow-label" id="hz-next-label">See what happens</span>
+            <button type="button" class="hz__arrow hz__arrow--next is-cue" id="hz-next" aria-label={t.nextAria}>
+              <span class="hz__arrow-label" id="hz-next-label">{t.nextLabel}</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </button>
           </div>
@@ -100,7 +184,7 @@ const mCleanD = mWave(300, 60, false);
           class="hz__svg"
           viewBox="0 0 760 360"
           role="img"
-          aria-label="Distorted grid current flows toward a commercial building cross-section, running its HVAC drives, compressors, and elevator motor hot; a harmonizer drops in against the building like a shield, and everything behind it heals: clean blue current feeds every line and the windows warm as the building settles. The grid side stays distorted throughout."
+          aria-label={t.svgAria}
         >
           <defs>
             <clipPath id="hz-clip-dist">
@@ -194,42 +278,38 @@ const mCleanD = mWave(300, 60, false);
             <line class="hz__box-line" x1="342" y1="258" x2="402" y2="258"></line>
             <line class="hz__box-line" x1="342" y1="272" x2="402" y2="272"></line>
             <line class="hz__box-line" x1="342" y1="286" x2="402" y2="286"></line>
-            <text class="hz__box-label" x="372" y="308" text-anchor="middle">Harmonizer</text>
-            <text class="hz__box-sub" x="372" y="321" text-anchor="middle">at the panel</text>
+            <text class="hz__box-label" x="372" y="308" text-anchor="middle">{t.boxLabel}</text>
+            <text class="hz__box-sub" x="372" y="321" text-anchor="middle">{t.boxSub}</text>
           </g>
 
           <g class="hz__bill" transform="translate(78,34)">
-            <text class="hz__meter-label" x="0" y="0">Your utility bill</text>
-            <text class="hz__bill-name" x="0" y="30">Useful energy</text>
+            <text class="hz__meter-label" x="0" y="0">{t.billLabel}</text>
+            <text class="hz__bill-name" x="0" y="30">{t.rUseful}</text>
             <text class="hz__bill-amt" x="210" y="30" text-anchor="end">$1,000</text>
 
             <g class="hz__cost" id="hz-c1">
-              <text class="hz__bill-name" x="0" y="58">Lost as heat</text>
+              <text class="hz__bill-name" x="0" y="58">{t.rHeat}</text>
               <text class="hz__bill-amt hz__cost-amt" x="210" y="58" text-anchor="end">+$90</text>
             </g>
             <g class="hz__cost" id="hz-c2">
-              <text class="hz__bill-name" x="0" y="86">Power-factor penalty</text>
+              <text class="hz__bill-name" x="0" y="86">{t.rPf}</text>
               <text class="hz__bill-amt hz__cost-amt" x="210" y="86" text-anchor="end">+$35</text>
             </g>
 
             <g id="hz-credit" class="hz__credit">
-              <text class="hz__bill-name hz__bill--mint" x="0" y="114">Harmonizer</text>
+              <text class="hz__bill-name hz__bill--mint" x="0" y="114">{t.rHarmo}</text>
               <text class="hz__bill-amt hz__bill--mint" x="210" y="114" text-anchor="end">&#8722;$125</text>
             </g>
 
             <line class="hz__bill-rule" x1="0" y1="132" x2="210" y2="132"></line>
-            <text class="hz__bill-tlabel" x="0" y="158">What you pay</text>
+            <text class="hz__bill-tlabel" x="0" y="158">{t.rPay}</text>
             <text class="hz__bill-total" id="hz-total" x="210" y="160" text-anchor="end">$1,125</text>
-            <text class="hz__bill-note" x="0" y="178">Illustrative split, set by your own utility data.</text>
+            <text class="hz__bill-note" x="0" y="178">{t.billNote}</text>
           </g>
         </svg>
         <aside class="hz__offbill">
-          <span class="hz__offbill-eyebrow">Off the bill, too</span>
-          <p class="hz__offbill-text">
-            Dirty power also takes <strong>5+ years</strong> off a large HVAC
-            unit, the kind that costs <strong>tens of thousands</strong> to
-            replace. That bill never reaches your meter.<Disc to="results" />
-          </p>
+          <span class="hz__offbill-eyebrow">{t.offbillEyebrow}</span>
+          <p class="hz__offbill-text"><Fragment set:html={t.offbill} /><Disc to="results" lang={lang} /></p>
         </aside>
       </figure>
     </div>
@@ -239,21 +319,19 @@ const mCleanD = mWave(300, 60, false);
        desktop scroll-scene above is hidden on phones; this is shown instead. -->
   <div class="hz__mobile">
     <div class="container">
-      <h2 class="hz__m-title">What dirty power does, and what the harmonizer undoes.</h2>
+      <h2 class="hz__m-title">{t.mTitle}</h2>
       <ol class="hz__m-steps">
         <li class="hz__m-step">
           <span class="hz__m-num">1</span>
           <div class="hz__m-body">
             <p class="hz__m-text">
-              Your motors, elevators, and air conditioners pull electricity in
-              rough, uneven bursts. That roughness builds up inside your
-              building, not out on the grid.
+              {t.mStep1}
             </p>
             <figure class="hz__m-viz hz__m-viz--dirty">
-              <svg viewBox="0 0 300 60" role="img" aria-label="A rough, distorted current waveform.">
+              <svg viewBox="0 0 300 60" role="img" aria-label={t.vizDirtyAria}>
                 <path d={mDirtyD} fill="none" stroke="var(--hz-dist)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <figcaption>Rough, uneven current</figcaption>
+              <figcaption>{t.capDirty}</figcaption>
             </figure>
           </div>
         </li>
@@ -262,17 +340,15 @@ const mCleanD = mWave(300, 60, false);
           <span class="hz__m-num">2</span>
           <div class="hz__m-body">
             <p class="hz__m-text">
-              Rough power gets less done, so your building pulls more
-              electricity to run the same machines. The waste shows up on every
-              bill.
+              {t.mStep2}
             </p>
             <div class="hz__m-bill">
-              <p class="hz__m-bill-label">Your utility bill</p>
-              <div class="hz__m-row"><span>Useful energy</span><span>$1,000</span></div>
-              <div class="hz__m-row hz__m-row--cost"><span>Lost as heat</span><span>+$90</span></div>
-              <div class="hz__m-row hz__m-row--cost"><span>Power-factor penalty</span><span>+$35</span></div>
-              <div class="hz__m-row hz__m-row--total"><span>What you pay</span><span>$1,125</span></div>
-              <p class="hz__m-bill-note">Illustrative split, set by your own utility data.<Disc to="results" /></p>
+              <p class="hz__m-bill-label">{t.billLabel}</p>
+              <div class="hz__m-row"><span>{t.rUseful}</span><span>$1,000</span></div>
+              <div class="hz__m-row hz__m-row--cost"><span>{t.rHeat}</span><span>+$90</span></div>
+              <div class="hz__m-row hz__m-row--cost"><span>{t.rPf}</span><span>+$35</span></div>
+              <div class="hz__m-row hz__m-row--total"><span>{t.rPay}</span><span>$1,125</span></div>
+              <p class="hz__m-bill-note">{t.billNote}<Disc to="results" lang={lang} /></p>
             </div>
           </div>
         </li>
@@ -281,15 +357,13 @@ const mCleanD = mWave(300, 60, false);
           <span class="hz__m-num">3</span>
           <div class="hz__m-body">
             <p class="hz__m-text">
-              The harmonizer cleans up the power where it enters your building,
-              before the roughness reaches your equipment. Your motors and
-              compressors run cooler and steadier.
+              {t.mStep3}
             </p>
             <figure class="hz__m-viz hz__m-viz--clean">
-              <svg viewBox="0 0 300 60" role="img" aria-label="A clean, steady current waveform.">
+              <svg viewBox="0 0 300 60" role="img" aria-label={t.vizCleanAria}>
                 <path d={mCleanD} fill="none" stroke="var(--mint)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <figcaption><span class="hz__m-chip">Harmonizer · at the panel</span></figcaption>
+              <figcaption><span class="hz__m-chip">{t.capChip}</span></figcaption>
             </figure>
           </div>
         </li>
@@ -298,25 +372,21 @@ const mCleanD = mWave(300, 60, false);
           <span class="hz__m-num">4</span>
           <div class="hz__m-body">
             <p class="hz__m-text">
-              Lower bills, fewer breakdowns, and equipment that lasts longer.
+              {t.mStep4}
             </p>
             <div class="hz__m-bill hz__m-bill--settled">
-              <div class="hz__m-row"><span>Useful energy</span><span>$1,000</span></div>
-              <div class="hz__m-row hz__m-row--credit"><span>Harmonizer</span><span>&#8722;$125</span></div>
-              <div class="hz__m-row hz__m-row--total hz__m-row--good"><span>What you pay</span><span>$1,000</span></div>
+              <div class="hz__m-row"><span>{t.rUseful}</span><span>$1,000</span></div>
+              <div class="hz__m-row hz__m-row--credit"><span>{t.rHarmo}</span><span>&#8722;$125</span></div>
+              <div class="hz__m-row hz__m-row--total hz__m-row--good"><span>{t.rPay}</span><span>$1,000</span></div>
             </div>
-            <p class="hz__m-stat"><strong>8 to 14%</strong> energy savings, verified at buildings like yours.<Disc to="results" /></p>
+            <p class="hz__m-stat"><Fragment set:html={t.mStat} /><Disc to="results" lang={lang} /></p>
           </div>
         </li>
       </ol>
 
       <aside class="hz__m-offbill">
-        <span class="hz__offbill-eyebrow">Off the bill, too</span>
-        <p class="hz__offbill-text">
-          Dirty power also takes <strong>5+ years</strong> off a large HVAC
-          unit, the kind that costs <strong>tens of thousands</strong> to
-          replace. That bill never reaches your meter.<Disc to="results" />
-        </p>
+        <span class="hz__offbill-eyebrow">{t.offbillEyebrow}</span>
+        <p class="hz__offbill-text"><Fragment set:html={t.offbill} /><Disc to="results" lang={lang} /></p>
       </aside>
     </div>
   </div>
@@ -367,12 +437,9 @@ const mCleanD = mWave(300, 60, false);
     const fmtK = (n) => Math.round(n).toLocaleString("en-US");
     const rectD = $("hz-rect-d");
 
-    const cards = [
-      "Your motors, elevators, and air conditioners pull electricity in rough, uneven bursts. That roughness builds up inside your building, not out on the grid.",
-      "Rough power gets less done, so your building pulls more electricity to run the same machines. Your meter counts the waste, and it shows up on every bill.",
-      "The harmonizer cleans up the power where it enters your building, before the roughness reaches your equipment. Your motors and compressors run cooler and steadier.",
-      "Lower bills, fewer breakdowns, and equipment that lasts longer. Verified at buildings like yours: 8 to 14 percent energy savings.",
-    ];
+    // card copy is provided per-locale via the section's data-cards attribute
+    let cards = [];
+    try { cards = JSON.parse(sec.dataset.cards || "[]"); } catch (e) { cards = []; }
     const card = $("hz-card");
     const cardText = $("hz-card-text");
     const cardNum = $("hz-card-num");
@@ -509,7 +576,7 @@ const mCleanD = mWave(300, 60, false);
       if (phase >= 1 && nextBtn) {
         // first advance: the dramatic starter cue calms to a plain Next arrow
         nextBtn.classList.remove("is-cue");
-        if (nextLabel) nextLabel.textContent = "Next";
+        if (nextLabel) nextLabel.textContent = sec.dataset.nextAfter || "Next";
       }
     };
     if (nextBtn) nextBtn.addEventListener("click", () => goTo(phase + 1));

@@ -7,46 +7,86 @@ import cj from "../assets/cj.jpeg";
 import pepper from "../assets/pepper.jpeg";
 import raul from "../assets/raul.jpeg";
 
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
 // Cliff Suljak leads the "Meet your procurement officer" section earlier on
 // the page, so he is intentionally not repeated in this roster.
-const team = [
-  {
-    photo: daniel, name: "Daniel Gutierrez", role: "CEO + Founder",
-    bio: "19 years connecting people, capital, and opportunity across 14+ industries and 70+ specialized markets. Former director of FDA-registered clinical trials. Works fee-for-performance, and is committed to deploying profits toward American infrastructure.",
-    tags: ["14+ Industries", "Fee for Performance"],
+const t = {
+  en: {
+    title: "Who reads your meter.",
+    lede: "Not a network of strangers. A team with verified credentials at the highest levels of government, infrastructure, and commercial energy, pointed at your building.",
+    team: [
+      {
+        photo: daniel, name: "Daniel Gutierrez", role: "CEO + Founder",
+        bio: "19 years connecting people, capital, and opportunity across 14+ industries and 70+ specialized markets. Former director of FDA-registered clinical trials. Works fee-for-performance, and is committed to deploying profits toward American infrastructure.",
+        tags: ["14+ Industries", "Fee for Performance"],
+      },
+      {
+        photo: ronson, name: "Ronson Provido", role: "Principal Engineering Advisor",
+        bio: "20+ years in electrical engineering: design, commissioning, R&D, and project management. Portfolio includes LAX and multi-state commercial and hospitality projects. Licensed PE, Title 24 and LEED qualified.",
+        tags: ["Licensed PE", "LAX Portfolio", "LEED"],
+      },
+      {
+        photo: cj, name: "CJ Metz", role: "Strategic Account Manager",
+        bio: "23+ years in technology leadership, sales, and consulting. Air Force veteran who has led initiatives for Fortune 500 firms, driving transformation across business, technology, and community.",
+        tags: ["Air Force Veteran", "Fortune 500"],
+      },
+      {
+        photo: pepper, name: "Pepper J. Matanga", role: "Partnerships & Business Development",
+        bio: "25+ years leading P.E.P. & Associates, a marketing, sales, and project-development firm. Partnerships span Fortune 100 names like AT&T, Boeing, Motorola, and NASA to federal agencies including the US Marine Corps, Navy, and CIA. A former collegiate and pro football coach who has also raised over $3M for national and local causes.",
+        tags: ["Fortune 100", "Gov & Defense", "$3M+ Raised"],
+      },
+      {
+        photo: raul, name: "Raul Solis", role: "International Market Development",
+        bio: "A seasoned business consultant who has spearheaded Energy Plus's expansion into Mexican and South American markets, opening retail, commercial, and government channels. Over the past decade he has focused on sales, marketing, and pioneering new products, laying the groundwork for growth across the region.",
+        tags: ["LATAM Expansion", "Sales & Marketing", "New Products"],
+      },
+    ],
   },
-  {
-    photo: ronson, name: "Ronson Provido", role: "Principal Engineering Advisor",
-    bio: "20+ years in electrical engineering: design, commissioning, R&D, and project management. Portfolio includes LAX and multi-state commercial and hospitality projects. Licensed PE, Title 24 and LEED qualified.",
-    tags: ["Licensed PE", "LAX Portfolio", "LEED"],
+  es: {
+    title: "Quién lee su medidor.",
+    lede: "No es una red de desconocidos. Es un equipo con credenciales verificadas en los niveles más altos del gobierno, la infraestructura y la energía comercial, enfocado en su edificio.",
+    team: [
+      {
+        photo: daniel, name: "Daniel Gutierrez", role: "Director General y Fundador",
+        bio: "19 años conectando personas, capital y oportunidades en más de 14 industrias y más de 70 mercados especializados. Exdirector de ensayos clínicos registrados ante la FDA. Trabaja con honorarios por resultados y está comprometido a destinar las ganancias a la infraestructura estadounidense.",
+        tags: ["Más de 14 industrias", "Honorarios por resultados"],
+      },
+      {
+        photo: ronson, name: "Ronson Provido", role: "Asesor Principal de Ingeniería",
+        bio: "Más de 20 años en ingeniería eléctrica: diseño, puesta en marcha, I+D y gestión de proyectos. Su portafolio incluye LAX y proyectos comerciales y de hospitalidad en varios estados. PE con licencia, calificado en Title 24 y LEED.",
+        tags: ["PE con licencia", "Portafolio LAX", "LEED"],
+      },
+      {
+        photo: cj, name: "CJ Metz", role: "Gerente Estratégico de Cuentas",
+        bio: "Más de 23 años en liderazgo tecnológico, ventas y consultoría. Veterano de la Fuerza Aérea que ha liderado iniciativas para empresas Fortune 500, impulsando la transformación en los negocios, la tecnología y la comunidad.",
+        tags: ["Veterano de la Fuerza Aérea", "Fortune 500"],
+      },
+      {
+        photo: pepper, name: "Pepper J. Matanga", role: "Alianzas y Desarrollo de Negocios",
+        bio: "Más de 25 años liderando P.E.P. & Associates, una firma de marketing, ventas y desarrollo de proyectos. Sus alianzas abarcan nombres de Fortune 100 como AT&T, Boeing, Motorola y NASA, hasta agencias federales como el US Marine Corps, la Navy y la CIA. Exentrenador de fútbol americano colegial y profesional que además ha recaudado más de $3M para causas nacionales y locales.",
+        tags: ["Fortune 100", "Gobierno y Defensa", "Más de $3M recaudados"],
+      },
+      {
+        photo: raul, name: "Raul Solis", role: "Desarrollo de Mercados Internacionales",
+        bio: "Un consultor de negocios experimentado que ha encabezado la expansión de Energy Plus hacia los mercados de México y Sudamérica, abriendo canales minoristas, comerciales y de gobierno. Durante la última década se ha enfocado en ventas, marketing y el desarrollo pionero de nuevos productos, sentando las bases para el crecimiento en toda la región.",
+        tags: ["Expansión LATAM", "Ventas y Marketing", "Nuevos Productos"],
+      },
+    ],
   },
-  {
-    photo: cj, name: "CJ Metz", role: "Strategic Account Manager",
-    bio: "23+ years in technology leadership, sales, and consulting. Air Force veteran who has led initiatives for Fortune 500 firms, driving transformation across business, technology, and community.",
-    tags: ["Air Force Veteran", "Fortune 500"],
-  },
-  {
-    photo: pepper, name: "Pepper J. Matanga", role: "Partnerships & Business Development",
-    bio: "25+ years leading P.E.P. & Associates, a marketing, sales, and project-development firm. Partnerships span Fortune 100 names like AT&T, Boeing, Motorola, and NASA to federal agencies including the US Marine Corps, Navy, and CIA. A former collegiate and pro football coach who has also raised over $3M for national and local causes.",
-    tags: ["Fortune 100", "Gov & Defense", "$3M+ Raised"],
-  },
-  {
-    photo: raul, name: "Raul Solis", role: "International Market Development",
-    bio: "A seasoned business consultant who has spearheaded Energy Plus's expansion into Mexican and South American markets, opening retail, commercial, and government channels. Over the past decade he has focused on sales, marketing, and pioneering new products, laying the groundwork for growth across the region.",
-    tags: ["LATAM Expansion", "Sales & Marketing", "New Products"],
-  },
-];
+}[lang];
+
+const team = t.team;
 ---
 
 <section class="section team" id="team" aria-labelledby="team-title">
   <div class="container">
     <div class="team__head reveal">
-      <h2 class="team__title" id="team-title">Who reads your meter.</h2>
-      <p class="team__lede lede">
-        Not a network of strangers. A team with verified credentials at the
-        highest levels of government, infrastructure, and commercial energy,
-        pointed at your building.
-      </p>
+      <h2 class="team__title" id="team-title">{t.title}</h2>
+      <p class="team__lede lede">{t.lede}</p>
     </div>
 
     <div class="team__grid">

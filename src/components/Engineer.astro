@@ -7,13 +7,104 @@
 import cliff from "../assets/cliff.jpeg";
 import CtaPair from "./CtaPair.astro";
 
-const tiles = [
-  { fig: "Sole source", desc: "22-person team across four DOE/DOD facilities, Sandia National Laboratories" },
-  { fig: "$600M+", desc: "in projects at the Salt River Project", num: 600, prefix: "$", suffix: "M+" },
-  { fig: "ASTM", desc: "co-wrote the national standards other engineers are tested against" },
-  { fig: "UAE Grid", desc: "consulted Dubai, Abu Dhabi, and Sharjah on national grid reliability" },
-];
+interface Props {
+  lang?: "en" | "es";
+}
 
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    trustedBy: "Trusted by",
+    photoAlt: "Cliff Suljak, Chief Engineer",
+    role: "Chief Engineer",
+    headline: "Nobody wasted a capital budget on his watch.",
+    lead: "For four decades, the institutions that couldn't afford a wrong decision brought Cliff in first. Now he runs the same exam on your building, on your behalf, not the vendor's.",
+    seam: "Selected work",
+    prevLabel: "Previous project",
+    nextLabel: "Next project",
+    dotLabel: (n: number) => `Go to project ${n}`,
+    tiles: [
+      { fig: "Sole source", desc: "22-person team across four DOE/DOD facilities, Sandia National Laboratories" },
+      { fig: "$600M+", desc: "in projects at the Salt River Project", num: 600, prefix: "$", suffix: "M+" },
+      { fig: "ASTM", desc: "co-wrote the national standards other engineers are tested against" },
+      { fig: "UAE Grid", desc: "consulted Dubai, Abu Dhabi, and Sharjah on national grid reliability" },
+    ],
+    cards: [
+      {
+        tag: "Sandia National Laboratories · DOE / DOD",
+        head: "Sole-source. Five years. Twenty-two engineers. Four national facilities.",
+        body: "Sandia didn't put this contract out to bid. They awarded it directly to Cliff, then watched him assemble and direct a 22-person engineering team across facilities in Albuquerque, Livermore, Tonopah, and Kauai. Hundreds of task orders completed under Star Wars Program infrastructure. When the DOE and DOD need structural integrity assured, they don't shop around.",
+      },
+      {
+        tag: "Salt River Project · Arizona",
+        head: "He built the quality control system from scratch. The industry copied it.",
+        body: "As Manager of the Materials and Quality Services Division, Cliff created a complete quality control infrastructure for one of the Southwest's largest utility companies: metallurgical lab, nondestructive testing, failure analysis, predictive vibration monitoring. The innovations he introduced on projects exceeding $600M were later adopted by utilities across the country. He didn't follow best practice. He wrote it.",
+      },
+      {
+        tag: "York International · Los Angeles County Courts",
+        head: "Northridge earthquake. County engineers on the other side. He won.",
+        body: "After the Northridge earthquake threatened the world's largest thermal storage system at the LA County Courts facility, York International hired Cliff on a sole-source basis to fix it. He performed seismic stability analysis and delivered litigation testimony against the county's own engineers and consultants, and prevailed. Then he designed, fabricated, and personally oversaw installation of the custom seismic restraint system. Problem found, fought, and solved.",
+      },
+      {
+        tag: "UAE National Power Grid · Dubai · Abu Dhabi · Sharjah",
+        head: "Three emirates. One grid. They called him in to assess all of it.",
+        body: "What began as a reactive power loss engagement across Dubai, Abu Dhabi, and Sharjah grew into a full operational assessment of the UAE's entire power grid. Cliff mobilized in-country for extended periods, consulting directly to utility authorities on sustainability measures and grid reliability. When a nation's infrastructure is the project, the margin for error is zero.",
+      },
+      {
+        tag: "ASTM · Standards Committee · 8 Years",
+        head: "He didn't just pass the standard. He helped write it.",
+        body: "For eight years Cliff served on the ASTM committee developing test methods for leading-edge materials science diagnostic equipment: advanced composite and ultra-high-strength metals in extreme temperature environments. The methods he helped develop were adopted as national industry acceptance criteria for utility procurement. The standards that govern what other engineers do? He had a hand in those.",
+      },
+    ],
+  },
+  es: {
+    trustedBy: "Con la confianza de",
+    photoAlt: "Cliff Suljak, Ingeniero Jefe",
+    role: "Ingeniero Jefe",
+    headline: "Nadie desperdició un presupuesto de capital bajo su supervisión.",
+    lead: "Durante cuatro décadas, las instituciones que no podían permitirse una decisión equivocada recurrieron a Cliff primero. Ahora aplica el mismo examen a su edificio, en su nombre, no en el del proveedor.",
+    seam: "Trabajos seleccionados",
+    prevLabel: "Proyecto anterior",
+    nextLabel: "Proyecto siguiente",
+    dotLabel: (n: number) => `Ir al proyecto ${n}`,
+    tiles: [
+      { fig: "Fuente única", desc: "equipo de 22 personas en cuatro instalaciones del DOE/DOD, Sandia National Laboratories" },
+      { fig: "$600M+", desc: "en proyectos en el Salt River Project", num: 600, prefix: "$", suffix: "M+" },
+      { fig: "ASTM", desc: "coautor de las normas nacionales con las que se evalúa a otros ingenieros" },
+      { fig: "Red de EAU", desc: "asesoró a Dubái, Abu Dabi y Sharjah sobre la fiabilidad de la red nacional" },
+    ],
+    cards: [
+      {
+        tag: "Sandia National Laboratories · DOE / DOD",
+        head: "Fuente única. Cinco años. Veintidós ingenieros. Cuatro instalaciones nacionales.",
+        body: "Sandia no sacó este contrato a licitación. Se lo adjudicó directamente a Cliff y luego lo vio reunir y dirigir un equipo de ingeniería de 22 personas en instalaciones de Albuquerque, Livermore, Tonopah y Kauai. Cientos de órdenes de trabajo completadas dentro de la infraestructura del Programa Star Wars. Cuando el DOE y el DOD necesitan asegurar la integridad estructural, no andan comparando precios.",
+      },
+      {
+        tag: "Salt River Project · Arizona",
+        head: "Construyó el sistema de control de calidad desde cero. La industria lo copió.",
+        body: "Como Gerente de la División de Materiales y Servicios de Calidad, Cliff creó una infraestructura completa de control de calidad para una de las mayores compañías de servicios públicos del suroeste: laboratorio metalúrgico, ensayos no destructivos, análisis de fallas, monitoreo predictivo de vibraciones. Las innovaciones que introdujo en proyectos que superaban los $600M fueron adoptadas más tarde por compañías de servicios públicos de todo el país. No siguió las mejores prácticas. Las escribió.",
+      },
+      {
+        tag: "York International · Los Angeles County Courts",
+        head: "El terremoto de Northridge. Los ingenieros del condado del otro lado. Él ganó.",
+        body: "Después de que el terremoto de Northridge amenazara el sistema de almacenamiento térmico más grande del mundo en las instalaciones de los tribunales del condado de Los Ángeles (LA County Courts), York International contrató a Cliff por fuente única para repararlo. Realizó un análisis de estabilidad sísmica y prestó testimonio en litigio contra los propios ingenieros y consultores del condado, y prevaleció. Luego diseñó, fabricó y supervisó personalmente la instalación del sistema personalizado de restricción sísmica. Problema detectado, disputado y resuelto.",
+      },
+      {
+        tag: "UAE National Power Grid · Dubai · Abu Dhabi · Sharjah",
+        head: "Tres emiratos. Una red. Lo llamaron para evaluarla por completo.",
+        body: "Lo que comenzó como un encargo sobre la pérdida de potencia reactiva en Dubái, Abu Dabi y Sharjah se convirtió en una evaluación operativa integral de toda la red eléctrica de los EAU. Cliff se trasladó al país por períodos prolongados, asesorando directamente a las autoridades de servicios públicos sobre medidas de sostenibilidad y fiabilidad de la red. Cuando el proyecto es la infraestructura de una nación, el margen de error es cero.",
+      },
+      {
+        tag: "ASTM · Standards Committee · 8 Years",
+        head: "No solo aprobó la norma. Ayudó a redactarla.",
+        body: "Durante ocho años, Cliff formó parte del comité de la ASTM que desarrollaba métodos de ensayo para equipos de diagnóstico de ciencia de materiales de vanguardia: compuestos avanzados y metales de ultra alta resistencia en entornos de temperatura extrema. Los métodos que ayudó a desarrollar fueron adoptados como criterios nacionales de aceptación de la industria para las adquisiciones de servicios públicos. ¿Las normas que rigen lo que hacen otros ingenieros? Él tuvo que ver en ellas.",
+      },
+    ],
+  },
+}[lang];
+
+const tiles = t.tiles;
 const trusted = [
   "Sandia National Laboratories (Department of Energy and Department of Defense)",
   "Salt River Project",
@@ -26,40 +117,13 @@ const trusted = [
   "GlobalVest",
   "Abu Dhabi",
 ];
-
-const cards = [
-  {
-    tag: "Sandia National Laboratories · DOE / DOD",
-    head: "Sole-source. Five years. Twenty-two engineers. Four national facilities.",
-    body: "Sandia didn't put this contract out to bid. They awarded it directly to Cliff, then watched him assemble and direct a 22-person engineering team across facilities in Albuquerque, Livermore, Tonopah, and Kauai. Hundreds of task orders completed under Star Wars Program infrastructure. When the DOE and DOD need structural integrity assured, they don't shop around.",
-  },
-  {
-    tag: "Salt River Project · Arizona",
-    head: "He built the quality control system from scratch. The industry copied it.",
-    body: "As Manager of the Materials and Quality Services Division, Cliff created a complete quality control infrastructure for one of the Southwest's largest utility companies: metallurgical lab, nondestructive testing, failure analysis, predictive vibration monitoring. The innovations he introduced on projects exceeding $600M were later adopted by utilities across the country. He didn't follow best practice. He wrote it.",
-  },
-  {
-    tag: "York International · Los Angeles County Courts",
-    head: "Northridge earthquake. County engineers on the other side. He won.",
-    body: "After the Northridge earthquake threatened the world's largest thermal storage system at the LA County Courts facility, York International hired Cliff on a sole-source basis to fix it. He performed seismic stability analysis and delivered litigation testimony against the county's own engineers and consultants, and prevailed. Then he designed, fabricated, and personally oversaw installation of the custom seismic restraint system. Problem found, fought, and solved.",
-  },
-  {
-    tag: "UAE National Power Grid · Dubai · Abu Dhabi · Sharjah",
-    head: "Three emirates. One grid. They called him in to assess all of it.",
-    body: "What began as a reactive power loss engagement across Dubai, Abu Dhabi, and Sharjah grew into a full operational assessment of the UAE's entire power grid. Cliff mobilized in-country for extended periods, consulting directly to utility authorities on sustainability measures and grid reliability. When a nation's infrastructure is the project, the margin for error is zero.",
-  },
-  {
-    tag: "ASTM · Standards Committee · 8 Years",
-    head: "He didn't just pass the standard. He helped write it.",
-    body: "For eight years Cliff served on the ASTM committee developing test methods for leading-edge materials science diagnostic equipment: advanced composite and ultra-high-strength metals in extreme temperature environments. The methods he helped develop were adopted as national industry acceptance criteria for utility procurement. The standards that govern what other engineers do? He had a hand in those.",
-  },
-];
+const cards = t.cards;
 ---
 
 <section class="eng" id="procurement" aria-labelledby="eng-headline">
   <div class="eng__wrap">
     <div class="eng__trust">
-      <p class="eng__trust-label">Trusted by</p>
+      <p class="eng__trust-label">{t.trustedBy}</p>
       <div class="eng__marquee" id="eng-marquee">
         <div class="eng__track">
           {[...trusted, ...trusted].map((name) => (
@@ -75,20 +139,18 @@ const cards = [
     <div class="eng__grid">
       <div class="eng__photo-col">
         <figure class="eng__photo">
-          <img class="bio-photo" src={cliff.src} alt="Cliff Suljak, Chief Engineer" loading="lazy" />
+          <img class="bio-photo" src={cliff.src} alt={t.photoAlt} loading="lazy" />
         </figure>
         <p class="eng__name">Cliff Suljak</p>
-        <p class="eng__role">Chief Engineer</p>
+        <p class="eng__role">{t.role}</p>
       </div>
 
       <div class="eng__content">
         <h2 class="eng__headline" id="eng-headline">
-          Nobody wasted a capital budget on his watch.
+          {t.headline}
         </h2>
         <p class="eng__lead">
-          For four decades, the institutions that couldn't afford a wrong
-          decision brought Cliff in first. Now he runs the same exam on your
-          building, on your behalf, not the vendor's.
+          {t.lead}
         </p>
 
         <div class="eng__tiles">
@@ -103,7 +165,7 @@ const cards = [
     </div>
 
     <div class="eng__seam" aria-hidden="true">
-      <span class="eng__seam-label">Selected work</span>
+      <span class="eng__seam-label">{t.seam}</span>
     </div>
 
     <div class="eng__cards">
@@ -116,18 +178,18 @@ const cards = [
           </article>
         ))}
       </div>
-      <button class="eng__arrow eng__arrow--prev" id="eng-prev" type="button" aria-label="Previous project">&larr;</button>
-      <button class="eng__arrow eng__arrow--next" id="eng-next" type="button" aria-label="Next project">&rarr;</button>
+      <button class="eng__arrow eng__arrow--prev" id="eng-prev" type="button" aria-label={t.prevLabel}>&larr;</button>
+      <button class="eng__arrow eng__arrow--next" id="eng-next" type="button" aria-label={t.nextLabel}>&rarr;</button>
     </div>
 
     <div class="eng__dots" id="eng-dots">
       {cards.map((_, i) => (
-        <button class="eng__dot" type="button" data-i={i} aria-label={`Go to project ${i + 1}`}></button>
+        <button class="eng__dot" type="button" data-i={i} aria-label={t.dotLabel(i + 1)}></button>
       ))}
     </div>
 
     <div class="eng__cta">
-      <CtaPair />
+      <CtaPair lang={lang} />
     </div>
   </div>
 </section>

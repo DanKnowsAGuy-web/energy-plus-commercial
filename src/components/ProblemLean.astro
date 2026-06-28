@@ -3,33 +3,60 @@
 // Keeps the stat hook and the cause->effect chain, replaces the two insulin
 // prose paragraphs with a two-panel "prescription vs exam" visual + one
 // pull-quote. Cuts roughly half the prose of the two original sections.
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en", ...existing } = Astro.props;
+
+const t = {
+  en: {
+    title:
+      "Your building wastes about a third of the energy it buys. So why didn't your last upgrade pay off?",
+    note: "The EPA's figure for the average commercial building. Most have never had anyone qualified find out where theirs goes.",
+    introH: "You would never give insulin to someone who isn't diabetic.",
+    introP:
+      "But that's what a case study is: a vendor selling you what worked in someone else's building, prescribed before anyone examined yours.",
+    badH: "Prescription without an exam",
+    badP: "The vendor arrives with the one box they sell, the medicine that worked on someone else's building.",
+    goodH: "Exam, then prescription",
+    goodP: "We measure your building first, then fit and modify equipment to what it actually needs.",
+    quote1: "We don't work for the vendors.",
+    quote2: "We work for you.",
+  },
+  es: {
+    title:
+      "Su edificio desperdicia cerca de un tercio de la energía que compra. Entonces, ¿por qué su última mejora no rindió frutos?",
+    note: "La cifra de la EPA para el edificio comercial promedio. La mayoría nunca ha tenido a alguien calificado que descubra a dónde se va la suya.",
+    introH: "Usted nunca le daría insulina a alguien que no es diabético.",
+    introP:
+      "Pero eso es lo que es un caso de estudio: un proveedor que le vende lo que funcionó en el edificio de otra persona, recetado antes de que alguien examinara el suyo.",
+    badH: "Receta sin un examen",
+    badP: "El proveedor llega con la única caja que vende, el medicamento que funcionó en el edificio de otra persona.",
+    goodH: "Examen, luego receta",
+    goodP: "Primero medimos su edificio y luego ajustamos y modificamos el equipo según lo que realmente necesita.",
+    quote1: "No trabajamos para los proveedores.",
+    quote2: "Trabajamos para usted.",
+  },
+}[lang];
 ---
 
 <section class="section probl" id="problem" aria-labelledby="probl-title">
   <div class="container">
     <div class="probl__grid">
       <div class="probl__lead reveal">
-        <h2 class="probl__title" id="probl-title">
-          Your building wastes about a third of the energy it buys. So why
-          didn't your last upgrade pay off?
-        </h2>
+        <h2 class="probl__title" id="probl-title">{t.title}</h2>
         <p class="probl__stat fig">
           <span class="fig__val" data-countup="30" data-prefix="~" data-suffix="">~30</span>
           <span class="fig__unit">%</span>
         </p>
-        <p class="probl__note">
-          The EPA's figure for the average commercial building. Most have
-          never had anyone qualified find out where theirs goes.
-        </p>
+        <p class="probl__note">{t.note}</p>
       </div>
 
       <div class="probl__body reveal">
         <div class="probl__intro">
-          <h3 class="probl__intro-h">You would never give insulin to someone who isn't diabetic.</h3>
-          <p class="probl__intro-p">
-            But that's what a case study is: a vendor selling you what worked in
-            someone else's building, prescribed before anyone examined yours.
-          </p>
+          <h3 class="probl__intro-h">{t.introH}</h3>
+          <p class="probl__intro-p">{t.introP}</p>
         </div>
         <div class="probl__panels">
           <div class="probl__panel probl__panel--bad">
@@ -39,8 +66,8 @@
                 <path d="m8.5 8.5 7 7" />
               </svg>
             </span>
-            <h3>Prescription without an exam</h3>
-            <p>The vendor arrives with the one box they sell, the medicine that worked on someone else's building.</p>
+            <h3>{t.badH}</h3>
+            <p>{t.badP}</p>
           </div>
           <div class="probl__panel probl__panel--good">
             <span class="probl__mark probl__mark--ok" aria-hidden="true">
@@ -50,11 +77,11 @@
                 <circle cx="20" cy="10" r="2" />
               </svg>
             </span>
-            <h3>Exam, then prescription</h3>
-            <p>We measure your building first, then fit and modify equipment to what it actually needs.</p>
+            <h3>{t.goodH}</h3>
+            <p>{t.goodP}</p>
           </div>
         </div>
-        <p class="probl__quote"><span>We don't work for the vendors.</span> <span>We work for you.</span></p>
+        <p class="probl__quote"><span>{t.quote1}</span> <span>{t.quote2}</span></p>
       </div>
     </div>
   </div>

@@ -10,157 +10,304 @@
 // The five harmonization cases are the originals; HVAC and whole-building
 // cases are interleaved between them.
 import Disc from "./Disc.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    title: "Proof, not promises.",
+    lede: "The scene above isn't hypothetical. Here is the distortion lever, measured in the field by independent analysts, floor numbers first.",
+    recordStat: "200+ measured results",
+    recordMeta: "11 countries · 6 continents · multiple utility companies",
+    recordGo: "View the record",
+    recordAria: "View the full record of 200-plus measured results, opens in a new tab",
+    chip: "Full documentation available upon request",
+    prevAria: "Previous case study",
+    nextAria: "Next case study",
+    catHarm: "Energy harmonization alone",
+    catHvac: "HVAC efficiency alone",
+    catWhole: "Whole-building program",
+    cases: [
+      {
+        type: "Auto Dealership",
+        unit: "annual energy cut, full-stack program",
+        scope: "power quality + HVAC + lighting · 1.06M kWh/yr · 25-mo payback",
+        verifier: "Documented project total",
+      },
+      {
+        type: "Hospital",
+        unit: "kWh reduction over 9 months, whole facility",
+        scope: "power factor + voltage conditioning + line reactors · $84,270 saved",
+        verifier: "Metered; both phases beat projection",
+      },
+      {
+        type: "Manufacturing",
+        unit: "more output, with energy cost up only 2%",
+        scope: "8-hour to 12-hour production day · Sta'bl-POWER total-systems · weighted for hours and weather",
+        verifier: "Growth-adjusted net cost study",
+      },
+      {
+        type: "Municipal",
+        unit: "average reduction across city facilities, year one",
+        scope: "power conditioning + LED retrofit · facilities-wide",
+        verifier: "First-year monitored",
+      },
+      {
+        type: "Hospitality",
+        unit: "kWh reduction at the meter, 12 months",
+        scope: "123 rooms · 11 devices across 28 panels",
+        verifier: "Verified by ABRAXAS",
+      },
+      {
+        type: "Hospitality",
+        unit: "facility kWh reduction, refrigerant-side coil treatment",
+        scope: "5 RTUs + 190-ton chiller · 18-month pilot",
+        verifier: "Verified by Dominion Energy + TRC",
+      },
+      {
+        type: "Hotel & Resort",
+        unit: "kWh reduction, monthly average over 12 months",
+        scope: "3 buildings · paid for itself in the first year",
+        verifier: "Verified by CHI Energy",
+      },
+      {
+        type: "Retail",
+        unit: "kWh reduction, refrigerant-side efficiency",
+        scope: "mall HVAC · $41,473/yr · 12-month payback",
+        verifier: "IPMVP third-party M&V",
+      },
+      {
+        type: "Office + Warehouse",
+        unit: "kWh reduction, four-year average",
+        scope: "35,000 sq ft · 8 devices, one per panel",
+        verifier: "Verified by Noesis",
+      },
+      {
+        type: "Distribution",
+        unit: "RTU energy reduction, refrigerant-side treatment",
+        scope: "HVAC + refrigeration · 20-month payback",
+        verifier: "Verified on the meter and bill",
+      },
+      {
+        type: "Hospitality",
+        unit: "kW demand reduction, metered panels",
+        scope: "arena lighting + receptacle panels, 45-day baseline",
+        verifier: "Third-party meter data",
+      },
+      {
+        type: "Logistics",
+        unit: "compressor efficiency gain, ammonia system",
+        scope: "ammonia refrigeration · 13.8-month payback",
+        verifier: "Compressor efficiency study",
+      },
+      {
+        type: "Office (historic)",
+        unit: "kWh reduction, metered floor by floor",
+        scope: "10 floors · 10 devices, one per floor",
+        verifier: "Metered impact evaluation",
+      },
+    ],
+  },
+  es: {
+    title: "Pruebas, no promesas.",
+    lede: "La escena anterior no es hipotética. Aquí está la palanca de la distorsión, medida en campo por analistas independientes, con los números conservadores primero.",
+    recordStat: "Más de 200 resultados medidos",
+    recordMeta: "11 países · 6 continentes · múltiples compañías eléctricas",
+    recordGo: "Ver el registro",
+    recordAria: "Ver el registro completo de más de 200 resultados medidos, se abre en una pestaña nueva",
+    chip: "Documentación completa disponible a solicitud",
+    prevAria: "Caso de estudio anterior",
+    nextAria: "Siguiente caso de estudio",
+    catHarm: "Solo armonización de energía",
+    catHvac: "Solo eficiencia de HVAC",
+    catWhole: "Programa de edificio completo",
+    cases: [
+      {
+        type: "Concesionario de autos",
+        unit: "reducción anual de energía, programa integral",
+        scope: "calidad de energía + HVAC + iluminación · 1.06M kWh/año · retorno en 25 meses",
+        verifier: "Total documentado del proyecto",
+      },
+      {
+        type: "Hospital",
+        unit: "reducción de kWh en 9 meses, instalación completa",
+        scope: "factor de potencia + acondicionamiento de voltaje + reactores de línea · $84,270 ahorrados",
+        verifier: "Medido; ambas fases superaron la proyección",
+      },
+      {
+        type: "Manufactura",
+        unit: "más producción, con un aumento del costo de energía de solo 2%",
+        scope: "jornada de producción de 8 a 12 horas · sistemas totales Sta'bl-POWER · ponderado por horas y clima",
+        verifier: "Estudio de costo neto ajustado por crecimiento",
+      },
+      {
+        type: "Municipal",
+        unit: "reducción promedio en las instalaciones de la ciudad, primer año",
+        scope: "acondicionamiento de energía + modernización LED · en todas las instalaciones",
+        verifier: "Monitoreado el primer año",
+      },
+      {
+        type: "Hospitalidad",
+        unit: "reducción de kWh en el medidor, 12 meses",
+        scope: "123 habitaciones · 11 dispositivos en 28 tableros",
+        verifier: "Verificado por ABRAXAS",
+      },
+      {
+        type: "Hospitalidad",
+        unit: "reducción de kWh de la instalación, tratamiento de serpentín del lado del refrigerante",
+        scope: "5 RTU + enfriador de 190 toneladas · piloto de 18 meses",
+        verifier: "Verificado por Dominion Energy + TRC",
+      },
+      {
+        type: "Hotel y Resort",
+        unit: "reducción de kWh, promedio mensual durante 12 meses",
+        scope: "3 edificios · se pagó por sí mismo en el primer año",
+        verifier: "Verificado por CHI Energy",
+      },
+      {
+        type: "Comercio minorista",
+        unit: "reducción de kWh, eficiencia del lado del refrigerante",
+        scope: "HVAC del centro comercial · $41,473/año · retorno en 12 meses",
+        verifier: "M&V de terceros según IPMVP",
+      },
+      {
+        type: "Oficina + Almacén",
+        unit: "reducción de kWh, promedio de cuatro años",
+        scope: "35,000 pies² · 8 dispositivos, uno por tablero",
+        verifier: "Verificado por Noesis",
+      },
+      {
+        type: "Distribución",
+        unit: "reducción de energía de RTU, tratamiento del lado del refrigerante",
+        scope: "HVAC + refrigeración · retorno en 20 meses",
+        verifier: "Verificado en el medidor y en la factura",
+      },
+      {
+        type: "Hospitalidad",
+        unit: "reducción de demanda en kW, tableros medidos",
+        scope: "iluminación de arena + tableros de tomacorrientes, línea base de 45 días",
+        verifier: "Datos de medidor de terceros",
+      },
+      {
+        type: "Logística",
+        unit: "mejora en la eficiencia del compresor, sistema de amoníaco",
+        scope: "refrigeración por amoníaco · retorno en 13.8 meses",
+        verifier: "Estudio de eficiencia del compresor",
+      },
+      {
+        type: "Oficina (histórica)",
+        unit: "reducción de kWh, medida piso por piso",
+        scope: "10 pisos · 10 dispositivos, uno por piso",
+        verifier: "Evaluación de impacto medida",
+      },
+    ],
+  },
+}[lang];
+
 const cats = {
-  harm: { label: "Energy harmonization alone" },
-  hvac: { label: "HVAC efficiency alone" },
-  whole: { label: "Whole-building program" },
+  harm: { label: t.catHarm },
+  hvac: { label: t.catHvac },
+  whole: { label: t.catWhole },
 };
 // Order: the four whole-building programs lead, then the single-measure cases
 // alternate harmonization <-> HVAC efficiency. Every figure counts up (ranges
 // animate both ends; the bottling figure carries a "+" prefix).
-const cases = [
+// Language-independent data (cat, place, name, numeric fields); descriptive
+// text (type/unit/scope/verifier) is merged from the t.cases dictionary.
+const caseData = [
   {
     cat: "whole",
-    type: "Auto Dealership",
     place: "Arizona",
     name: ["AZ Ford", "Dealership"],
     fval: "49.2", num: 49.2, dec: 1, funit: "%",
-    unit: "annual energy cut, full-stack program",
-    scope: "power quality + HVAC + lighting · 1.06M kWh/yr · 25-mo payback",
-    verifier: "Documented project total",
   },
   {
     cat: "whole",
-    type: "Hospital",
     place: "Naperville, IL",
     name: ["Edward", "Hospital"],
     fval: "24", num: 24, dec: 0, funit: "%",
-    unit: "kWh reduction over 9 months, whole facility",
-    scope: "power factor + voltage conditioning + line reactors · $84,270 saved",
-    verifier: "Metered; both phases beat projection",
   },
   {
     cat: "whole",
-    type: "Manufacturing",
     place: "Upper Midwest",
     name: ["Commercial", "Bottling Plant"],
     fval: "+50", num: 50, dec: 0, pre: "+", funit: "%",
-    unit: "more output, with energy cost up only 2%",
-    scope: "8-hour to 12-hour production day · Sta'bl-POWER total-systems · weighted for hours and weather",
-    verifier: "Growth-adjusted net cost study",
   },
   {
     cat: "whole",
-    type: "Municipal",
     place: "Rainsville, AL",
     name: ["City of", "Rainsville"],
     fval: "27", num: 27, dec: 0, funit: "%",
-    unit: "average reduction across city facilities, year one",
-    scope: "power conditioning + LED retrofit · facilities-wide",
-    verifier: "First-year monitored",
   },
   {
     cat: "harm",
-    type: "Hospitality",
     place: "Marietta, GA",
     name: ["Hilton Garden Inn,", "Atlanta"],
     fval: "13.51", num: 13.51, dec: 2, funit: "%",
-    unit: "kWh reduction at the meter, 12 months",
-    scope: "123 rooms · 11 devices across 28 panels",
-    verifier: "Verified by ABRAXAS",
   },
   {
     cat: "hvac",
-    type: "Hospitality",
     place: "Chantilly, VA",
     name: ["Westfields Marriott,", "Washington Dulles"],
     fval: "13.26", num: 13.26, dec: 2, funit: "%",
-    unit: "facility kWh reduction, refrigerant-side coil treatment",
-    scope: "5 RTUs + 190-ton chiller · 18-month pilot",
-    verifier: "Verified by Dominion Energy + TRC",
   },
   {
     cat: "harm",
-    type: "Hotel & Resort",
     place: "Orange Beach, AL",
     name: ["Caribe", "Resort"],
     fval: "14", num: 14, dec: 0, funit: "%", mod: "+",
-    unit: "kWh reduction, monthly average over 12 months",
-    scope: "3 buildings · paid for itself in the first year",
-    verifier: "Verified by CHI Energy",
   },
   {
     cat: "hvac",
-    type: "Retail",
     place: "Elizabeth, NJ",
     name: ["Simon Property Gr.", "Jersey Gardens"],
     fval: "21.1", num: 21.1, dec: 1, funit: "%",
-    unit: "kWh reduction, refrigerant-side efficiency",
-    scope: "mall HVAC · $41,473/yr · 12-month payback",
-    verifier: "IPMVP third-party M&V",
   },
   {
     cat: "harm",
-    type: "Office + Warehouse",
     place: "Atlanta, GA",
     name: ["Corey", "Center"],
     fval: "14.8", num: 14.8, dec: 1, funit: "%",
-    unit: "kWh reduction, four-year average",
-    scope: "35,000 sq ft · 8 devices, one per panel",
-    verifier: "Verified by Noesis",
   },
   {
     cat: "hvac",
-    type: "Distribution",
     place: "Gulfport, MS",
     name: ["Anheuser-Busch,", "Mitchell Distributing"],
     fval: "19.2", num: 19.2, dec: 1, funit: "%",
-    unit: "RTU energy reduction, refrigerant-side treatment",
-    scope: "HVAC + refrigeration · 20-month payback",
-    verifier: "Verified on the meter and bill",
   },
   {
     cat: "harm",
-    type: "Hospitality",
     place: "Las Vegas, NV",
     name: ["Southpoint", "Hotel & Casino"],
     fval: "8.59", num: 8.59, dec: 2, funit: "%",
-    unit: "kW demand reduction, metered panels",
-    scope: "arena lighting + receptacle panels, 45-day baseline",
-    verifier: "Third-party meter data",
   },
   {
     cat: "hvac",
-    type: "Logistics",
     place: "United States",
     name: ["DHL", "Refrigeration Plant"],
     fval: "15", num: 15, dec: 0, funit: "%",
-    unit: "compressor efficiency gain, ammonia system",
-    scope: "ammonia refrigeration · 13.8-month payback",
-    verifier: "Compressor efficiency study",
   },
   {
     cat: "harm",
-    type: "Office (historic)",
     place: "Birmingham, AL",
     name: ["The Massey", "Building"],
     range: [9, 19], funit: "%",
-    unit: "kWh reduction, metered floor by floor",
-    scope: "10 floors · 10 devices, one per floor",
-    verifier: "Metered impact evaluation",
   },
 ];
+const cases = caseData.map((c, i) => ({ ...c, ...t.cases[i] }));
 ---
 
 <section class="section proof" id="proof" aria-labelledby="proof-title">
   <div class="container">
     <div class="proof__head reveal">
       <h2 class="proof__title reveal" id="proof-title" data-words>
-        Proof, not promises.
+        {t.title}
       </h2>
       <p class="proof__lede lede">
-        The scene above isn't hypothetical. Here is the distortion lever,
-        measured in the field by independent analysts, floor numbers first.<Disc to="results" />
+        {t.lede}<Disc to="results" lang={lang} />
       </p>
     </div>
 
@@ -169,17 +316,17 @@ const cases = [
       href="https://bit.ly/verified-results"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="View the full record of 200-plus measured results, opens in a new tab"
+      aria-label={t.recordAria}
     >
-      <span class="proof__record-stat">200+ measured results</span>
-      <span class="proof__record-meta">11 countries · 6 continents · multiple utility companies</span>
-      <span class="proof__record-go">View the record
+      <span class="proof__record-stat">{t.recordStat}</span>
+      <span class="proof__record-meta">{t.recordMeta}</span>
+      <span class="proof__record-go">{t.recordGo}
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </span>
     </a>
 
     <div class="proof__carousel reveal" style="--i: 1">
-      <button class="proof__arrow" id="proof-prev" type="button" aria-label="Previous case study">&larr;</button>
+      <button class="proof__arrow" id="proof-prev" type="button" aria-label={t.prevAria}>&larr;</button>
       <div class="proof__viewport" id="proof-viewport">
         <div class="proof__track" id="proof-track">
           {
@@ -205,13 +352,13 @@ const cases = [
                 <p class="case__unit">{c.unit}</p>
                 <p class="case__scope">{c.scope}</p>
                 <p class="case__verifier">{c.verifier}</p>
-                <p class="case__chip">Full documentation available upon request</p>
+                <p class="case__chip">{t.chip}</p>
               </article>
             ))
           }
         </div>
       </div>
-      <button class="proof__arrow" id="proof-next" type="button" aria-label="Next case study">&rarr;</button>
+      <button class="proof__arrow" id="proof-next" type="button" aria-label={t.nextAria}>&rarr;</button>
     </div>
   </div>
 </section>

@@ -1,6 +1,56 @@
 ---
 import logo from "../assets/energy-plus-logo.png";
 const year = new Date().getFullYear();
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    line:
+      "Independent energy partner to commercial buildings. We don't sell the box. We diagnose the property and verify the savings.",
+    navProblem: "The problem",
+    navEngineer: "The engineer",
+    navWhatWeFind: "What we find",
+    navProof: "Proof",
+    navCalculator: "Calculator",
+    navApply: "Apply Now",
+    legal:
+      '<strong>How to read this page.</strong> Energy Plus is an independent energy solutions partner. We do not manufacture equipment. We diagnose each property and procure, size, and integrate the right technologies from our stack for that specific building. The numbered notes below apply to the marked figures and statements throughout this page.',
+    note1:
+      '<strong>1. Savings and performance figures.</strong> All savings, bill-reduction, equipment-life, maintenance, and payback figures shown (including ranges such as 20&ndash;40% and 8&ndash;14%) are illustrative estimates or results achieved at specific facilities under their own conditions. They are not predictions or guarantees of your results. Case studies reflect results with specific technologies we deploy. Your actual results depend on your building, climate, occupancy, equipment condition, and utility rates, which is exactly why we measure your floor at your meter before you commit. Modeled numbers are directional estimates, not quotes.',
+    note2:
+      '<strong>2. Program terms and eligibility.</strong> Our done-for-you program, including negotiation, pricing, and contract terms, is offered case-by-case and depends on factors such as the number of facilities in your portfolio and the size of your electricity bills. Properties that do not qualify for the done-for-you program may instead be offered self-directed ("do-it-yourself") options, which carry different terms, pricing, and responsibilities. "No cost," "the diagnosis is on us," and "nothing owed" describe the diagnosis and pilot phase for qualifying properties; they do not describe the cost of any installed solution. Eligibility, scheduling, and availability are determined during the application and diagnosis process.',
+    note3:
+      '<strong>3. Tax incentives.</strong> Section 179D and any tax figures are potential amounts based on current federal rules and assumptions; they are not tax advice. Actual deductions depend on your building, the work performed, and your tax situation. Consult a qualified tax advisor.',
+    note4:
+      '<strong>4. Utility and incentive programs.</strong> Utility-program coverage (for example, "up to 75%," or the state percentages shown in the calculator) varies by state, utility, and program, and is subject to program availability, funding, and qualification. Amounts shown are illustrative and are not guaranteed.',
+    meta: "Independent Energy Solutions Partner.",
+  },
+  es: {
+    line:
+      "Socio independiente de energía para edificios comerciales. No vendemos el aparato. Diagnosticamos la propiedad y verificamos el ahorro.",
+    navProblem: "El problema",
+    navEngineer: "El ingeniero",
+    navWhatWeFind: "Lo que encontramos",
+    navProof: "Pruebas",
+    navCalculator: "Calculadora",
+    navApply: "Solicitar ahora",
+    legal:
+      '<strong>Cómo leer esta página.</strong> Energy Plus es un socio independiente de soluciones energéticas. No fabricamos equipos. Diagnosticamos cada propiedad y adquirimos, dimensionamos e integramos las tecnologías adecuadas de nuestro portafolio para ese edificio en específico. Las notas numeradas a continuación se aplican a las cifras y declaraciones marcadas a lo largo de esta página.',
+    note1:
+      '<strong>1. Cifras de ahorro y desempeño.</strong> Todas las cifras de ahorro, reducción de facturas, vida útil del equipo, mantenimiento y recuperación de la inversión que se muestran (incluidos rangos como 20&ndash;40% y 8&ndash;14%) son estimaciones ilustrativas o resultados obtenidos en instalaciones específicas bajo sus propias condiciones. No son predicciones ni garantías de los resultados de usted. Los casos de estudio reflejan resultados con tecnologías específicas que implementamos. Sus resultados reales dependen de su edificio, el clima, la ocupación, el estado del equipo y las tarifas de servicios públicos, que es exactamente por lo que medimos su piso conservador en su medidor antes de que usted se comprometa. Las cifras modeladas son estimaciones orientativas, no cotizaciones.',
+    note2:
+      '<strong>2. Términos y elegibilidad del programa.</strong> Nuestro programa hecho por nosotros, incluidas la negociación, los precios y los términos del contrato, se ofrece caso por caso y depende de factores como el número de instalaciones en su portafolio y el tamaño de sus facturas de electricidad. A las propiedades que no califican para el programa hecho por nosotros se les pueden ofrecer, en su lugar, opciones autodirigidas ("hágalo usted mismo"), que conllevan términos, precios y responsabilidades distintos. "Sin costo", "el diagnóstico corre por nuestra cuenta" y "nada que pagar" describen la fase de diagnóstico y piloto para las propiedades que califican; no describen el costo de ninguna solución instalada. La elegibilidad, la programación y la disponibilidad se determinan durante el proceso de solicitud y diagnóstico.',
+    note3:
+      '<strong>3. Incentivos fiscales.</strong> La Sección 179D y cualquier cifra fiscal son montos potenciales basados en las reglas federales y los supuestos actuales; no constituyen asesoría fiscal. Las deducciones reales dependen de su edificio, del trabajo realizado y de su situación fiscal. Consulte a un asesor fiscal calificado.',
+    note4:
+      '<strong>4. Programas de servicios públicos e incentivos.</strong> La cobertura de los programas de servicios públicos (por ejemplo, "hasta el 75%" o los porcentajes estatales que se muestran en la calculadora) varía según el estado, la compañía de servicios públicos y el programa, y está sujeta a la disponibilidad del programa, el financiamiento y la calificación. Los montos que se muestran son ilustrativos y no están garantizados.',
+    meta: "Socio Independiente de Soluciones Energéticas.",
+  },
+}[lang];
 ---
 
 <footer class="site-footer">
@@ -9,75 +59,32 @@ const year = new Date().getFullYear();
       <span class="footer-lockup">
         <img class="footer-lockup__logo" src={logo.src} width="104" height="30" alt="Energy Plus" />
       </span>
-      <p class="site-footer__line">
-        Independent energy partner to commercial buildings. We don't sell the
-        box. We diagnose the property and verify the savings.
-      </p>
+      <p class="site-footer__line">{t.line}</p>
     </div>
 
     <nav class="site-footer__nav" aria-label="Footer">
-      <a href="#problem">The problem</a>
-      <a href="#procurement">The engineer</a>
-      <a href="#what-we-find">What we find</a>
-      <a href="#proof">Proof</a>
-      <a href="#calculator">Calculator</a>
-      <a href="#book">Apply Now</a>
+      <a href="#problem">{t.navProblem}</a>
+      <a href="#procurement">{t.navEngineer}</a>
+      <a href="#what-we-find">{t.navWhatWeFind}</a>
+      <a href="#proof">{t.navProof}</a>
+      <a href="#calculator">{t.navCalculator}</a>
+      <a href="#book">{t.navApply}</a>
     </nav>
   </div>
 
   <div class="container" id="disclaimers">
-    <p class="site-footer__legal">
-      <strong>How to read this page.</strong> Energy Plus is an independent
-      energy solutions partner. We do not manufacture equipment. We diagnose
-      each property and procure, size, and integrate the right technologies
-      from our stack for that specific building. The numbered notes below apply
-      to the marked figures and statements throughout this page.
-    </p>
+    <p class="site-footer__legal" set:html={t.legal} />
     <ol class="site-footer__notes">
-      <li id="disc-results">
-        <strong>1. Savings and performance figures.</strong> All savings,
-        bill-reduction, equipment-life, maintenance, and payback figures shown
-        (including ranges such as 20&ndash;40% and 8&ndash;14%) are illustrative
-        estimates or results achieved at specific facilities under their own
-        conditions. They are not predictions or guarantees of your results.
-        Case studies reflect results with specific technologies we deploy. Your
-        actual results depend on your building, climate, occupancy, equipment
-        condition, and utility rates, which is exactly why we measure your floor
-        at your meter before you commit. Modeled numbers are directional
-        estimates, not quotes.
-      </li>
-      <li id="disc-terms">
-        <strong>2. Program terms and eligibility.</strong> Our done-for-you
-        program, including negotiation, pricing, and contract terms, is offered
-        case-by-case and depends on factors such as the number of facilities in
-        your portfolio and the size of your electricity bills. Properties that
-        do not qualify for the done-for-you program may instead be offered
-        self-directed ("do-it-yourself") options, which carry different terms,
-        pricing, and responsibilities. "No cost," "the diagnosis is on us," and
-        "nothing owed" describe the diagnosis and pilot phase for qualifying
-        properties; they do not describe the cost of any installed solution.
-        Eligibility, scheduling, and availability are determined during the
-        application and diagnosis process.
-      </li>
-      <li id="disc-tax">
-        <strong>3. Tax incentives.</strong> Section 179D and any tax figures
-        are potential amounts based on current federal rules and assumptions;
-        they are not tax advice. Actual deductions depend on your building, the
-        work performed, and your tax situation. Consult a qualified tax advisor.
-      </li>
-      <li id="disc-utility">
-        <strong>4. Utility and incentive programs.</strong> Utility-program
-        coverage (for example, "up to 75%," or the state percentages shown in
-        the calculator) varies by state, utility, and program, and is subject to
-        program availability, funding, and qualification. Amounts shown are
-        illustrative and are not guaranteed.
-      </li>
+      <li id="disc-results" set:html={t.note1} />
+      <li id="disc-terms" set:html={t.note2} />
+      <li id="disc-tax" set:html={t.note3} />
+      <li id="disc-utility" set:html={t.note4} />
     </ol>
   </div>
 
   <div class="container site-footer__meta">
     <span>&copy; {year} Energy Plus</span>
-    <span class="site-footer__neutral">Independent Energy Solutions Partner.</span>
+    <span class="site-footer__neutral">{t.meta}</span>
   </div>
 </footer>
 

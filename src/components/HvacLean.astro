@@ -2,47 +2,105 @@
 // BRUTAL-EDIT VARIANT of HvacShelf: a static, scannable spec list. Three
 // columns per row (icon+title / descriptor / figures), animated icons, the
 // figures kept in their own column so descriptors can never collide with them.
-const rows = [
-  {
-    key: "solar", word: "Solar-thermal",
-    desc: "The sun preheats the refrigerant. Thermal takes a fraction of the size and cost of solar panels.",
-    figs: [{ pre: "up to", value: "30–40%", suf: "energy savings" }],
-  },
-  {
-    key: "retrofit", word: "Compressor retrofit",
-    desc: "Instead of buying a whole new system, make your existing compressor run like an intelligent one.",
-    figs: [{ pre: "up to", value: "15–30%", suf: "energy savings" }],
-  },
-  {
-    key: "roof", word: "Cool Roof Shield",
-    desc: "Spray-on coatings or thermal membranes keep the heat off the building.",
-    figs: [
-      { value: "10–20°F", suf: "cooler roof" },
-      { pre: "up to", value: "10–25%", suf: "energy savings" },
+interface Props { lang?: "en" | "es"; }
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    eyebrow: "Heating and cooling",
+    title: "Your biggest burden is almost half your energy bill.",
+    lede: "We carry more than 20 HVAC solutions so you can match the right fix for your building instead of forcing a vendor solution to work. A few of the most popular:",
+    heroRibbon: "The standard",
+    heroTitle: "One unit, both loads.",
+    heroDesc: "When a unit is finally done, replace it with the gold standard: one machine that heats and cools your building at best-in-class efficiency.",
+    heroBadge: "IEER 31 · COP 6",
+    figPre: "up to",
+    coolVal: "55%",
+    coolSuf: "cooling energy savings",
+    warmVal: "60%",
+    warmSuf: "heating energy savings",
+    sublabel: "Or zero in on one gain:",
+    rows: [
+      {
+        key: "solar", word: "Solar-thermal",
+        desc: "The sun preheats the refrigerant. Thermal takes a fraction of the size and cost of solar panels.",
+        figs: [{ pre: "up to", value: "30–40%", suf: "energy savings" }],
+      },
+      {
+        key: "retrofit", word: "Compressor retrofit",
+        desc: "Instead of buying a whole new system, make your existing compressor run like an intelligent one.",
+        figs: [{ pre: "up to", value: "15–30%", suf: "energy savings" }],
+      },
+      {
+        key: "roof", word: "Cool Roof Shield",
+        desc: "Spray-on coatings or thermal membranes keep the heat off the building.",
+        figs: [
+          { value: "10–20°F", suf: "cooler roof" },
+          { pre: "up to", value: "10–25%", suf: "energy savings" },
+        ],
+      },
+      {
+        key: "seal", word: "Permaseal",
+        desc: "A one-time treatment. The older the unit, the more efficiency it brings back.",
+        figs: [{ pre: "up to", value: "10–36%", suf: "energy savings" }],
+      },
     ],
   },
-  {
-    key: "seal", word: "Permaseal",
-    desc: "A one-time treatment. The older the unit, the more efficiency it brings back.",
-    figs: [{ pre: "up to", value: "10–36%", suf: "energy savings" }],
+  es: {
+    eyebrow: "Calefacción y enfriamiento",
+    title: "Su mayor carga es casi la mitad de su factura de energía.",
+    lede: "Contamos con más de 20 soluciones de HVAC para que pueda elegir el arreglo adecuado para su edificio en lugar de forzar que funcione la solución de un proveedor. Algunas de las más populares:",
+    heroRibbon: "El estándar",
+    heroTitle: "Una sola unidad, ambas cargas.",
+    heroDesc: "Cuando una unidad por fin llega a su fin, reemplácela con el estándar de oro: una sola máquina que calienta y enfría su edificio con una eficiencia de primer nivel.",
+    heroBadge: "IEER 31 · COP 6",
+    figPre: "hasta",
+    coolVal: "55%",
+    coolSuf: "de ahorro en energía de enfriamiento",
+    warmVal: "60%",
+    warmSuf: "de ahorro en energía de calefacción",
+    sublabel: "O concéntrese en una sola ganancia:",
+    rows: [
+      {
+        key: "solar", word: "Solar-térmica",
+        desc: "El sol precalienta el refrigerante. La térmica ocupa una fracción del tamaño y el costo de los paneles solares.",
+        figs: [{ pre: "hasta", value: "30–40%", suf: "de ahorro en energía" }],
+      },
+      {
+        key: "retrofit", word: "Modernización del compresor",
+        desc: "En lugar de comprar un sistema completamente nuevo, haga que su compresor actual funcione como uno inteligente.",
+        figs: [{ pre: "hasta", value: "15–30%", suf: "de ahorro en energía" }],
+      },
+      {
+        key: "roof", word: "Escudo para techo fresco",
+        desc: "Los recubrimientos en aerosol o las membranas térmicas mantienen el calor fuera del edificio.",
+        figs: [
+          { value: "10–20°F", suf: "de techo más fresco" },
+          { pre: "hasta", value: "10–25%", suf: "de ahorro en energía" },
+        ],
+      },
+      {
+        key: "seal", word: "Permaseal",
+        desc: "Un tratamiento único. Cuanto más antigua sea la unidad, más eficiencia recupera.",
+        figs: [{ pre: "hasta", value: "10–36%", suf: "de ahorro en energía" }],
+      },
+    ],
   },
-];
+}[lang];
+
+const rows = t.rows;
 ---
 
 <section class="section hvl" id="hvac" aria-labelledby="hvl-title">
   <div class="container">
     <div class="hvl__head reveal">
-      <p class="eyebrow">Heating and cooling</p>
-      <h2 class="hvl__title" id="hvl-title">Your biggest burden is almost half your energy bill.</h2>
-      <p class="hvl__lede lede">
-        We carry more than 20 HVAC solutions so you can match the right fix for
-        your building instead of forcing a vendor solution to work. A few of
-        the most popular:
-      </p>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="hvl__title" id="hvl-title">{t.title}</h2>
+      <p class="hvl__lede lede">{t.lede}</p>
     </div>
 
     <div class="hvl__hero reveal">
-      <span class="hvl__hero-ribbon">The standard</span>
+      <span class="hvl__hero-ribbon">{t.heroRibbon}</span>
       <div class="hvl__hero-main">
         <span class="hvl__ico hvl__hero-ico" aria-hidden="true">
           <svg viewBox="0 0 48 48" fill="none">
@@ -54,30 +112,27 @@ const rows = [
           </svg>
         </span>
         <div class="hvl__hero-copy">
-          <h3 class="hvl__hero-title">One unit, both loads.</h3>
-          <p class="hvl__hero-desc">
-            When a unit is finally done, replace it with the gold standard: one
-            machine that heats and cools your building at best-in-class efficiency.
-          </p>
-          <span class="hvl__badge">IEER 31 · COP 6</span>
+          <h3 class="hvl__hero-title">{t.heroTitle}</h3>
+          <p class="hvl__hero-desc">{t.heroDesc}</p>
+          <span class="hvl__badge">{t.heroBadge}</span>
         </div>
       </div>
       <div class="hvl__hero-figs">
         <div class="hvl__hero-fig hvl__fig--cool">
-          <span class="hvl__fig-pre">up to</span>
-          <span class="hvl__fig-val">55%</span>
-          <span class="hvl__fig-suf">cooling energy savings</span>
+          <span class="hvl__fig-pre">{t.figPre}</span>
+          <span class="hvl__fig-val">{t.coolVal}</span>
+          <span class="hvl__fig-suf">{t.coolSuf}</span>
         </div>
         <span class="hvl__hero-div" aria-hidden="true"></span>
         <div class="hvl__hero-fig hvl__fig--warm">
-          <span class="hvl__fig-pre">up to</span>
-          <span class="hvl__fig-val">60%</span>
-          <span class="hvl__fig-suf">heating energy savings</span>
+          <span class="hvl__fig-pre">{t.figPre}</span>
+          <span class="hvl__fig-val">{t.warmVal}</span>
+          <span class="hvl__fig-suf">{t.warmSuf}</span>
         </div>
       </div>
     </div>
 
-    <p class="hvl__sublabel reveal">Or zero in on one gain:</p>
+    <p class="hvl__sublabel reveal">{t.sublabel}</p>
 
     <ol class="hvl__list">
       {rows.map((r, i) => (

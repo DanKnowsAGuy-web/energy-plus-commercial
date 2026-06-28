@@ -11,11 +11,13 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  lang?: "en" | "es";
 }
 
 const {
   title = "Energy Plus: verified energy savings for commercial buildings",
   description = "We cut your building's energy costs and prove the savings at your meter before you pay a cent. We even pay for the diagnosis ourselves.",
+  lang = "en",
 } = Astro.props;
 
 // Vertical through-line waveform paths (built once at compile time).
@@ -51,7 +53,7 @@ const tlClean = tlPath(false);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -5,6 +5,45 @@
 // the other pages. Structure + JS identical to Hero.astro.
 import CtaPair from "./CtaPair.astro";
 import Disc from "./Disc.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+const { lang = "en" } = Astro.props;
+const t = {
+  en: {
+    kicker: "The smart operators don't guess. They measure.",
+    titleLead: "Your building is",
+    titleAccent: "overpaying for energy.",
+    lede: "We find exactly how much and prove it at your own meter, so you act on what the meter shows, not what a vendor claims.",
+    chipsLabel: "What the pilot does not require",
+    chip1: "No capital at risk",
+    chip2: "No equipment torn out",
+    tagAhu: "Rooftop units fighting each other",
+    tagLaundry: "Exhaust dumping cooled air",
+    tagSwitch: "Power factor sagging at the switchgear",
+    tagBoiler: "Boilers short-cycling",
+    tagChiller: "Chiller stuck at part-load",
+    tagPump: "Hot-water loop running around the clock",
+    tagFridge: "Walk-in refrigeration never cycling off",
+  },
+  es: {
+    kicker: "Los operadores inteligentes no adivinan. Miden.",
+    titleLead: "Su edificio está",
+    titleAccent: "pagando de más por la energía.",
+    lede: "Encontramos exactamente cuánto y lo comprobamos en su propio medidor, para que usted actúe según lo que muestra el medidor, no según lo que afirma un proveedor.",
+    chipsLabel: "Lo que el piloto no requiere",
+    chip1: "Sin capital en riesgo",
+    chip2: "Sin desmontar equipos",
+    tagAhu: "Unidades de azotea peleando entre sí",
+    tagLaundry: "El extractor expulsando el aire enfriado",
+    tagSwitch: "Factor de potencia cayendo en el tablero de distribución",
+    tagBoiler: "Calderas con ciclos cortos",
+    tagChiller: "Enfriador atascado a carga parcial",
+    tagPump: "Circuito de agua caliente funcionando las 24 horas",
+    tagFridge: "Refrigeración de cámara que nunca se apaga",
+  },
+}[lang];
 function grid(x0, y0, cols, rows, gapX, gapY, w, h, lit) {
   const cells = [];
   for (let r = 0; r < rows; r++) {
@@ -114,7 +153,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(584 72)">
             <line x1="-12" y1="24" x2="0" y2="16" stroke="#4fc4cf" stroke-width="1" />
-            <text x="4" y="20">Rooftop units fighting each other</text>
+            <text x="4" y="20">{t.tagAhu}</text>
           </g>
         </g>
 
@@ -135,7 +174,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(630 312)">
             <line x1="-10" y1="14" x2="0" y2="14" stroke="#4fc4cf" stroke-width="1" />
-            <text x="4" y="18">Exhaust dumping cooled air</text>
+            <text x="4" y="18">{t.tagLaundry}</text>
           </g>
         </g>
 
@@ -152,7 +191,7 @@ const branches = [
           <path class="dev__arc" d="M356 442 l4 4 l-3 3 l5 5" fill="none" />
           <g class="dev__tag" transform="translate(150 494)">
             <line x1="186" y1="-24" x2="196" y2="-16" stroke="#4fc4cf" stroke-width="1" />
-            <text x="0" y="0">Power factor sagging at the switchgear</text>
+            <text x="0" y="0">{t.tagSwitch}</text>
           </g>
         </g>
 
@@ -168,7 +207,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(374 556)">
             <line x1="120" y1="-30" x2="130" y2="-24" stroke="#4fc4cf" stroke-width="1" />
-            <text x="0" y="0">Boilers short-cycling</text>
+            <text x="0" y="0">{t.tagBoiler}</text>
           </g>
         </g>
 
@@ -187,7 +226,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(704 556)">
             <line x1="20" y1="-36" x2="28" y2="-28" stroke="#4fc4cf" stroke-width="1" />
-            <text x="0" y="0">Chiller stuck at part-load</text>
+            <text x="0" y="0">{t.tagChiller}</text>
           </g>
         </g>
 
@@ -208,7 +247,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(360 338)">
             <line x1="100" y1="22" x2="110" y2="30" stroke="#4fc4cf" stroke-width="1" />
-            <text x="0" y="0">Hot-water loop running around the clock</text>
+            <text x="0" y="0">{t.tagPump}</text>
           </g>
         </g>
 
@@ -232,7 +271,7 @@ const branches = [
           </g>
           <g class="dev__tag" transform="translate(160 300)">
             <line x1="172" y1="22" x2="182" y2="30" stroke="#4fc4cf" stroke-width="1" />
-            <text x="0" y="0">Walk-in refrigeration never cycling off</text>
+            <text x="0" y="0">{t.tagFridge}</text>
           </g>
         </g>
       </svg>
@@ -314,25 +353,24 @@ const branches = [
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <p class="hero__kicker reveal">The smart operators don't guess. They measure.</p>
+      <p class="hero__kicker reveal">{t.kicker}</p>
 
       <h1 class="hero__title reveal" id="hero-title">
-        Your building is
-        <span class="hero__title-accent">overpaying for energy.</span>
+        {t.titleLead}
+        <span class="hero__title-accent">{t.titleAccent}</span>
       </h1>
 
       <p class="hero__lede lede reveal">
-        We find exactly how much and prove it at your own meter, so you act on
-        what the meter shows, not what a vendor claims.
+        {t.lede}
       </p>
 
       <div class="hero__actions reveal">
-        <CtaPair />
+        <CtaPair lang={lang} />
       </div>
 
-      <ul class="hero__chips reveal" aria-label="What the pilot does not require">
-        <li>No capital at risk</li>
-        <li>No equipment torn out<Disc to="terms" /></li>
+      <ul class="hero__chips reveal" aria-label={t.chipsLabel}>
+        <li>{t.chip1}</li>
+        <li>{t.chip2}<Disc to="terms" lang={lang} /></li>
       </ul>
     </div>
   </div>

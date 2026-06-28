@@ -3,27 +3,49 @@
 // (worked-document feel per DESIGN.md) so it no longer mirrors the centered
 // Offer benefit boxes. Each row: animated equipment icon, the load + one line,
 // and the replacement cost right-aligned like a price list.
-const items = [
-  { key: "elev", fig: "$50K–$150K", per: "per cab", term: "Elevator traction motors", line: "Hard starts at 6–8x running current wear the motor out early, with ADA exposure while the cab is down." },
-  { key: "ptac", fig: "$260K–$480K", per: "per property", term: "HVAC & RTU fleet", line: "Runs around the clock under heavy electrical stress; dirty power ages an entire HVAC fleet years too early." },
-  { key: "pump", fig: "$8K–$25K", per: "per pump", term: "Aquatic, spa & laundry drives", line: "Pumps and laundry drives fail the same way, and a peak-season closure turns straight into review damage." },
-];
+interface Props { lang?: "en" | "es"; }
+const { lang = "en" } = Astro.props;
+
+const items = {
+  en: [
+    { key: "elev", fig: "$50K–$150K", per: "per cab", term: "Elevator traction motors", line: "Hard starts at 6–8x running current wear the motor out early, with ADA exposure while the cab is down." },
+    { key: "ptac", fig: "$260K–$480K", per: "per property", term: "HVAC & RTU fleet", line: "Runs around the clock under heavy electrical stress; dirty power ages an entire HVAC fleet years too early." },
+    { key: "pump", fig: "$8K–$25K", per: "per pump", term: "Aquatic, spa & laundry drives", line: "Pumps and laundry drives fail the same way, and a peak-season closure turns straight into review damage." },
+  ],
+  es: [
+    { key: "elev", fig: "$50K–$150K", per: "por cabina", term: "Motores de tracción de ascensores", line: "Los arranques bruscos a 6–8x la corriente de funcionamiento desgastan el motor antes de tiempo, con exposición a la ADA mientras la cabina está fuera de servicio." },
+    { key: "ptac", fig: "$260K–$480K", per: "por propiedad", term: "Flota de HVAC y RTU", line: "Funciona las 24 horas bajo fuerte estrés eléctrico; la energía sucia envejece toda una flota de HVAC años antes de tiempo." },
+    { key: "pump", fig: "$8K–$25K", per: "por bomba", term: "Variadores de piscina, spa y lavandería", line: "Las bombas y los variadores de lavandería fallan de la misma forma, y un cierre en temporada alta se convierte directamente en daño a la reputación." },
+  ],
+}[lang];
+
+const t = {
+  en: {
+    title: "What dirty power costs a building.",
+    lede: "None of this shows up as a line item called waste, or in a standard energy audit, so it survives for years until we measure it at the panel.",
+    hLoad: "The load",
+    hCost: "Replacement cost",
+  },
+  es: {
+    title: "Lo que la energía sucia le cuesta a un edificio.",
+    lede: "Nada de esto aparece como una partida llamada desperdicio, ni en una auditoría de energía estándar, así que sobrevive durante años hasta que lo medimos en el tablero.",
+    hLoad: "La carga",
+    hCost: "Costo de reemplazo",
+  },
+}[lang];
 ---
 
 <section class="section afl" id="what-we-find" aria-labelledby="afl-title">
   <div class="container">
     <div class="afl__head reveal">
-      <h2 class="afl__title" id="afl-title">What dirty power costs a building.</h2>
-      <p class="afl__lede lede">
-        None of this shows up as a line item called waste, or in a standard
-        energy audit, so it survives for years until we measure it at the panel.
-      </p>
+      <h2 class="afl__title" id="afl-title">{t.title}</h2>
+      <p class="afl__lede lede">{t.lede}</p>
     </div>
 
     <ul class="afl__ledger">
       <li class="afl__head-row" aria-hidden="true">
-        <span class="afl__h-load">The load</span>
-        <span class="afl__h-cost">Replacement cost</span>
+        <span class="afl__h-load">{t.hLoad}</span>
+        <span class="afl__h-cost">{t.hCost}</span>
       </li>
       {items.map((it, i) => (
         <li class="afl__row reveal" style={`--i: ${i}`}>

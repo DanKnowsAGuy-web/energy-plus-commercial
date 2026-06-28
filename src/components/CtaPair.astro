@@ -4,12 +4,31 @@
 // founder" expands an SMS panel in place. Cal's script loads once, shortly
 // after page load and on first interaction, so the modal trigger
 // (data-cal-link on the buttons) is bound by the time it's clicked.
-const { size = "" } = Astro.props;
+const { size = "", lang = "en" } = Astro.props;
 const lg = size === "lg" ? " btn--lg" : "";
 const PHONE_DISPLAY = "(864) 777-0688";
-const MSG =
-  "Hi Dan, I run a commercial building and I'd like to see what real energy savings could look like at my property, without the sales song and dance. What does it take to qualify?";
 const CAL_LINK = "dan-knows-a-gut/15min";
+const t = {
+  en: {
+    apply: "Apply Now",
+    text: "Just text the founder",
+    textAria: "Text the founder",
+    to: "To",
+    msg: "Hi Dan, I run a commercial building and I'd like to see what real energy savings could look like at my property, without the sales song and dance. What does it take to qualify?",
+    hint: "Opens in your messages, ready to send.",
+    send: "Send message",
+  },
+  es: {
+    apply: "Solicitar ahora",
+    text: "Escríbele al fundador",
+    textAria: "Escríbele al fundador",
+    to: "Para",
+    msg: "Hola Dan, administro un edificio comercial y me gustaría ver cuánto ahorro de energía real podríamos lograr en mi propiedad, sin el típico discurso de ventas. ¿Qué se necesita para calificar?",
+    hint: "Se abre en tus mensajes, listo para enviar.",
+    send: "Enviar mensaje",
+  },
+}[lang];
+const MSG = t.msg;
 ---
 
 <div class="tf-cta">
@@ -21,21 +40,21 @@ const CAL_LINK = "dan-knows-a-gut/15min";
       data-cal-link={CAL_LINK}
       data-cal-config='{"layout":"month_view","theme":"dark"}'
     >
-      Apply Now
+      {t.apply}
       <span class="btn__arrow" aria-hidden="true">&rarr;</span>
     </button>
     <button type="button" class={`btn btn--ghost js-tf-toggle${lg}`} aria-expanded="false">
-      Just text the founder
+      {t.text}
     </button>
   </div>
 
-  <div class="tf-panel" role="group" aria-label="Text the founder">
-    <p class="tf-panel__to">To <span>Dan &middot; {PHONE_DISPLAY}</span></p>
+  <div class="tf-panel" role="group" aria-label={t.textAria}>
+    <p class="tf-panel__to">{t.to} <span>Dan &middot; {PHONE_DISPLAY}</span></p>
     <textarea class="tf-panel__msg js-tf-msg" rows="4" spellcheck="false">{MSG}</textarea>
     <div class="tf-panel__foot">
-      <span class="tf-panel__hint">Opens in your messages, ready to send.</span>
+      <span class="tf-panel__hint">{t.hint}</span>
       <a class="tf-panel__send js-tf-send" href="#" data-phone="+18647770688">
-        Send message
+        {t.send}
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12 h13 M12 5 l7 7 -7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </a>
     </div>
