@@ -31,6 +31,10 @@ body{font-family:'Hanken Grotesk',sans-serif;background:transparent;color:var(--
 body.embed{padding:0;}
 body.embed .calc{max-width:none;border:none;box-shadow:none;animation:none;}
 body.embed::before{display:none;}
+/* The host page carries its own EN|ES toggle, so the calculator's internal
+   language bar is redundant chrome inside the embed — hide it. (?lang=es from
+   the Spanish page still selects Spanish without it.) */
+body.embed .lang-bar{display:none;}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)' opacity='0.042'/%3E%3C/svg%3E");pointer-events:none;z-index:0;mix-blend-mode:screen;}
 @keyframes calcEntrance{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .calc{width:100%;max-width:700px;background:var(--ink-2);border:1px solid var(--gold-rule);box-shadow:0 0 0 1px rgba(70,207,214,0.06),0 24px 60px -28px rgba(0,0,0,0.72);overflow-x:hidden;position:relative;z-index:1;animation:calcEntrance 0.6s cubic-bezier(0.22,1,0.36,1) both;}
